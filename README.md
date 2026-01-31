@@ -1,5 +1,7 @@
 # ChoreoLooper #
 
+<img src="https://raw.githubusercontent.com/streubelm/ChoreoLooper/refs/heads/main/app/src/main/res/drawable/logo.png" alt="Logo" width="100"/>
+
 *ChoreoLooper* ist eine Audiowiedergabe-App, die beim Üben von Freestyle-Küren unterstützen
 soll. Inspiriert von [ReChoreo](https://app.goos.de/rechoreo.html)-App für iOS, entwickelt von Nina Herzog und Jonas Goos, erlaubt *ChoreoLooper* das 
 wiederholte Abspielen von Ausschnitten aus der Kürmusik, mit anpassbaren Pausen vor und 
@@ -18,7 +20,7 @@ andere Fahrer weitergegeben werden.
 
 ## Installation ##
 
-Die App wird zeitnah im Google Play Store veröffentlicht. Bis dahin steht die jeweils aktuelle Version als APK-Paket unter [Releases](https://github.com/Maximilian57/ChoreoLooper/releases) zum Download bereit.
+Die App wird zeitnah im Google Play Store veröffentlicht. Bis dahin steht die jeweils aktuelle Version als APK-Paket unter [Releases](https://github.com/streubelm/ChoreoLooper/releases) zum Download bereit.
 
 
 ## Verwendung ##

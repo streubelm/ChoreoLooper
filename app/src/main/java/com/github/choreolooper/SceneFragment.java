@@ -166,15 +166,6 @@ public class SceneFragment extends Fragment
                 afterSceneEdited();
             }
         });
-        sceneNotes.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    sceneNotes.clearFocus();
-                }
-                return true;
-            }
-        });
 
         return view;
     }

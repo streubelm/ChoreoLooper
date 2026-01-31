@@ -167,15 +167,6 @@ public class MarkFragment extends Fragment {
                 afterMarkEdited();
             }
         });
-        markNotes.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    markNotes.clearFocus();
-                }
-                return true;
-            }
-        });
 
         return view;
     }

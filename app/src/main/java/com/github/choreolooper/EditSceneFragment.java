@@ -147,15 +147,6 @@ public class EditSceneFragment extends Fragment {
                 apply();
             }
         });
-        sceneNotes.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    sceneNotes.clearFocus();
-                }
-                return true;
-            }
-        });
 
         // Input field for the media fragment begin
         begin = view.findViewById(R.id.startTime);

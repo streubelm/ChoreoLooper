@@ -18,9 +18,10 @@ Außerdem verwendet *ChoreoLooper* keine externen Bibliotheken die Daten
 erfassen könnten, insbesondere keine Analyse- oder Trackingtools.
 
 Bei Rückfragen oder Bedenken stehe ich gerne per E-Mail zur Verfügung.
-
+<br/><br/>
 
 Danke, dass Sie *ChoreoLooper* nutzen!
 
-Maximilian Streubel
+Maximilian Streubel 
+<br/>
 [streubelmaximilian@gmail.com](mailto:streubelmaximilian@gmail.com)

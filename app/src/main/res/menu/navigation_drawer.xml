@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/play"
+        android:scaleType="fitCenter"
+        android:title="@string/home"/>
+
+    <group
+        android:id="@+id/nav_files"/>
+
+    <item
+        android:id="@+id/nav_manual"
+        android:icon="@drawable/help"
+        android:scaleType="fitCenter"
+        android:title="@string/manual"/>
+
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/logo_fg"
+        android:scaleType="fitCenter"
+        android:title="@string/about" />
+</menu>

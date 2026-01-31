@@ -1,0 +1,60 @@
+html {
+    padding: 10px 15px 10px 15px;
+}
+
+b {
+    color: 960000;
+}
+
+.box {
+    border-style: solid;
+    border-color: 960000;
+    border-width: 2px;
+    padding: 5px;
+}
+
+.greytext {
+    font-color: grey;
+    font-family: monospace;
+}
+
+h2 {
+    margin-top: 1lh;
+}
+
+h3 {
+    margin-top: 1.5lh;
+}
+
+h4 {
+    margin-top: 1.5lh;
+}
+
+.line-img {
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+p img {
+    height: 0.6lh;
+    width: auto;
+    padding: 0 2px 0 2px;
+}
+
+li img {
+    height: 0.6lh;
+    width: auto;
+    padding: 0 2px 0 2px;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dt img {
+    height: 0.6lh;
+    width: auto;
+    padding: 0 2px 0 2px;
+}

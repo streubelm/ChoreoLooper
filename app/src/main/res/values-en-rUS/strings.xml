@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ChoreoLooper</string>
+    <string name="statePlaying">Playing</string>
+    <string name="statePre">Waiting for Start</string>
+    <string name="stateUninit">No File</string>
+    <string name="modeTitle">Playback Mode</string>
+    <string name="modeNormal">Normal</string>
+    <string name="modeSeq">Sequence</string>
+    <string name="actionOpen">Open</string>
+    <string name="actionSave">Save</string>
+    <string name="paramPre">Pause Before:</string>
+    <string name="paramStart">Start:</string>
+    <string name="paramEnd">End:</string>
+    <string name="paramReps">Repetitions:</string>
+    <string name="paramInter">Pause Between:</string>
+    <string name="stateStopped">Paused</string>
+    <string name="stateInter">Waiting for Repetition</string>
+    <string name="seekBegin">To Start</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="setBegin">Set Start</string>
+    <string name="setEnd">Set End</string>
+    <string name="seekEnd">To End</string>
+    <string name="showDetails">Show More</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="saveInto">Overwrite</string>
+    <string name="fullScene">Full Song</string>
+    <string name="delete">Delete</string>
+    <string name="loaderError">Failed to load media.</string>
+    <string name="setMark">Set Mark</string>
+    <string name="edit_scene_title">Edit</string>
+    <string name="notes">Notes</string>
+    <string name="name">Name</string>
+    <string name="saveError">Error Saving</string>
+    <string name="noChoreoMsg">Not a choreography file</string>
+    <string name="mediaError">Media Loading Error</string>
+    <string name="replaceMedia">Failed to load media file.\\nSelect a different file?</string>
+    <string name="autoMarker">" [auto]"</string>
+    <string name="seqBasename">"Sequence "</string>
+    <string name="markBasename">"Mark "</string>
+    <string name="about">About ChoreoLooper</string>
+    <string name="manual">Usage</string>
+    <string name="home">Home</string>
+    <string name="files">Files</string>
+    <string name="back">Back</string>
+</resources>

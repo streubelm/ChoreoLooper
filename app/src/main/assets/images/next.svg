@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="5.1324787mm"
+   height="5.0001149mm"
+   viewBox="0 0 5.1324787 5.0001149"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="ui-manual.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.1513747"
+     inkscape:cx="182.22879"
+     inkscape:cy="844.90085"
+     inkscape:window-width="2634"
+     inkscape:window-height="1444"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g32"
+     showgrid="false"
+     showguides="true">
+    <sodipodi:guide
+       position="14.93215,16.956621"
+       orientation="1,0"
+       id="guide1"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-45.749524,15.631031"
+       orientation="1,0"
+       id="guide20"
+       inkscape:locked="false" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="5.1324787"
+       height="5.0001149"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-71.888486,-258.90633)">
+    <g
+       id="g4-3"
+       inkscape:label="end"
+       transform="translate(6.5356241,240.91588)"
+       style="fill:none;stroke:#004284;stroke-opacity:1"
+       inkscape:export-filename="next.svg"
+       inkscape:export-xdpi="25.4"
+       inkscape:export-ydpi="25.4">
+      <path
+         style="fill:none;stroke:#004284;stroke-width:0.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 70.085341,18.390465 v 4.20011"
+         id="path1-6-6" />
+      <path
+         style="fill:none;stroke:#004284;stroke-width:0.799999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 65.752865,18.390489 v 4.200062 l 3.532515,-2.100033 z"
+         id="path2-0-1"
+         sodipodi:nodetypes="cccc" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="60.731667mm"
+   height="20.183668mm"
+   viewBox="0 0 60.731667 20.183668"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="ui-manual.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.1513747"
+     inkscape:cx="182.22879"
+     inkscape:cy="844.90085"
+     inkscape:window-width="2634"
+     inkscape:window-height="1444"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g32"
+     showgrid="false"
+     showguides="true">
+    <sodipodi:guide
+       position="-89.240389,-45.077329"
+       orientation="1,0"
+       id="guide20"
+       inkscape:locked="false" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="60.731667"
+       height="20.183668"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient3"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#939393;stop-opacity:1;"
+         offset="0"
+         id="stop3" />
+      <stop
+         style="stop-color:#969696;stop-opacity:0.50196078;"
+         offset="0.36309099"
+         id="stop5" />
+      <stop
+         style="stop-color:#8e8e8e;stop-opacity:0;"
+         offset="1"
+         id="stop4" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3"
+       id="linearGradient4-7-0"
+       x1="45.997414"
+       y1="25.149593"
+       x2="45.997414"
+       y2="26.666342"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(11.770123,46.140838)" />
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-115.37935,-183.01441)">
+    <rect
+       style="fill:none;stroke:#adadad;stroke-width:0.236962;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="rect4-2"
+       width="57.896408"
+       height="39.217854"
+       x="116.6432"
+       y="194.87276"
+       ry="1.2862198"
+       rx="1.6099659" />
+    <rect
+       style="fill:none;stroke:#adadad;stroke-width:0.265;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="rect4-1-4"
+       width="29.445751"
+       height="7.7871718"
+       x="116.65723"
+       y="185.18639"
+       ry="1.6092812"
+       rx="1.6092811" />
+    <g
+       id="g14-9-8"
+       transform="translate(103.60923,136.87358)">
+      <rect
+         style="opacity:0.68989;fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-opacity:1"
+         id="rect1-1-6"
+         width="73.129593"
+         height="121.82458"
+         x="9.4326181"
+         y="9.1776819" />
+      <rect
+         style="opacity:0.68989;fill:#0083da;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-opacity:1"
+         id="rect2-2-2"
+         width="73.129593"
+         height="15.971912"
+         x="9.4326181"
+         y="9.1776819" />
+      <g
+         id="g16-0-4"
+         inkscape:export-filename="app/src/main/res/drawable/open.svg"
+         inkscape:export-xdpi="25.4"
+         inkscape:export-ydpi="25.4"
+         transform="matrix(1.2276666,0,0,1.2380952,-100.95282,-7.7450463)"
+         style="stroke-width:0.811116">
+        <path
+           style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.648893;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 96.159504,17.990551 v 4.2 h 4.321276 v -3.41707 h -2.370662 v -0.78293 z"
+           id="path15-9-7"
+           sodipodi:nodetypes="ccccccc" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.648893;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 96.159504,22.190553 4.321276,-2e-6 1.46163,-2.269839 -4.321276,2e-6 z"
+           id="path16-3-2"
+           sodipodi:nodetypes="ccccc" />
+      </g>
+      <g
+         id="g17-6-4"
+         inkscape:export-filename="app/src/main/res/drawable/save.svg"
+         inkscape:export-xdpi="25.4"
+         inkscape:export-ydpi="25.4"
+         transform="matrix(1.2372694,0,0,1.2380966,-60.854202,-7.6741754)"
+         style="stroke:#ffffff;stroke-width:0.807961;stroke-opacity:1">
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:0.64637;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 107.56966,17.990701 v 2.524621"
+           id="path17-0-0" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:0.646368;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 109.71619,22.190551 h -4.29306"
+           id="path17-7-62-6" />
+        <path
+           id="path7-6-61-2"
+           style="fill:none;stroke:#ffffff;stroke-width:0.646369;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 106.45293,19.920701 1.11673,1.189261 1.11673,-1.189261"
+           sodipodi:nodetypes="ccc" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:4.58611px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="30.592674"
+         y="18.356028"
+         id="text5-8-9"><tspan
+           sodipodi:role="line"
+           id="tspan5-7-9"
+           style="font-size:4.58611px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           x="30.592674"
+           y="18.356028">Kürmusik</tspan></text>
+      <rect
+         style="opacity:1;fill:url(#linearGradient4-7-0);stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-opacity:1"
+         id="rect3-7-8"
+         width="73.229591"
+         height="1.6350486"
+         x="9.3326178"
+         y="25.149593" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52777px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.264583"
+       x="118.88135"
+       y="190.19829"
+       id="text4-2"><tspan
+         sodipodi:role="line"
+         id="tspan4-7"
+         style="stroke-width:0.264583"
+         x="118.88135"
+         y="190.19829">Markierung 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52777px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';white-space:pre;inline-size:63.881;display:inline;stroke-width:0.264583"
+       x="100.06223"
+       y="66.793129"
+       id="text8-6"
+       transform="translate(18.612831,133.177)"><tspan
+         x="100.06223"
+         y="66.793129"
+         id="tspan1">Auch Markierungen können mit
+</tspan><tspan
+         x="100.06223"
+         y="71.202842"
+         id="tspan2">Notizen genauer beschrieben</tspan></text>
+    <g
+       id="g105"
+       transform="translate(118.50001,137.15458)"
+       inkscape:export-filename="app/src/main/assets/images/setPos.svg"
+       inkscape:export-xdpi="25.4"
+       inkscape:export-ydpi="25.4">
+      <path
+         style="fill:none;stroke:#004284;stroke-width:0.800002;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 53.158078,50.624935 v 2.628177"
+         id="path11-5"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#004284;stroke-width:0.799999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 50.558078,51.93282 1.800001,0.0041"
+         id="path12-0"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#004284;stroke-width:0.799998;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 53.958076,51.93282 1.800001,0.0041"
+         id="path13-4"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <rect
+       style="fill:none;stroke:#bababa;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect32-2-7-7-7"
+       width="60.631672"
+       height="20.083673"
+       x="115.42937"
+       y="183.06441"
+       inkscape:export-filename="app/src/main/assets/images/line-markView.svg"
+       inkscape:export-xdpi="25.4"
+       inkscape:export-ydpi="25.4" />
+    <g
+       id="g29"
+       transform="translate(1.9757511)">
+      <rect
+         style="fill:#0083da;fill-opacity:1;stroke:none;stroke-width:0.299999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="rect23"
+         width="13.816896"
+         height="6"
+         x="150.30376"
+         y="186.0936"
+         ry="0.66920602"
+         rx="0.66920602" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:Cantarell;-inkscape-font-specification:Cantarell;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="157.15593"
+         y="190.44016"
+         id="text26"><tspan
+           sodipodi:role="line"
+           style="font-size:3.52778px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           x="157.15593"
+           y="190.44016"
+           id="tspan27">01:47</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        android:orientation="vertical"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/playerView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mainBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:paddingTop="10dp"
+                android:elevation="6dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/actionSave"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="@id/sceneSpinner"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/sceneSpinner" />
+
+                <ImageButton
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/delete"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/delete"
+                    app:layout_constraintBottom_toBottomOf="@id/sceneSpinner"
+                    app:layout_constraintLeft_toRightOf="@id/edit"
+                    app:layout_constraintTop_toTopOf="@id/sceneSpinner" />
+
+                <com.github.choreolooper.AOSpinner
+                    android:id="@+id/sceneSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintLeft_toRightOf="@id/delete"
+                    app:layout_constraintRight_toLeftOf="@id/saveNew"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <ImageButton
+                    android:id="@+id/saveNew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/actionSave"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/savenew"
+                    app:layout_constraintBottom_toBottomOf="@id/sceneSpinner"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/sceneSpinner" />
+
+
+                <ImageButton
+                    android:id="@+id/editMark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/actionSave"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/editmark"
+                    app:layout_constraintBottom_toBottomOf="@id/markSpinner"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/markSpinner" />
+
+                <ImageButton
+                    android:id="@+id/markDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/delete"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/deletemark"
+                    app:layout_constraintBottom_toBottomOf="@id/markSpinner"
+                    app:layout_constraintLeft_toRightOf="@id/editMark"
+                    app:layout_constraintTop_toTopOf="@id/markSpinner" />
+
+                <com.github.choreolooper.AOSpinner
+                    android:id="@+id/markSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintLeft_toRightOf="@id/markDelete"
+                    app:layout_constraintRight_toLeftOf="@id/saveMarkNew"
+                    app:layout_constraintTop_toBottomOf="@id/sceneSpinner" />
+
+                <ImageButton
+                    android:id="@+id/saveMarkNew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="2dp"
+                    android:adjustViewBounds="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/actionSave"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/savemarknew"
+                    app:layout_constraintBottom_toBottomOf="@id/markSpinner"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/markSpinner" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/main_inner_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mainBar"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="?shadowTop"
+        app:layout_constraintBottom_toTopOf="@id/playerView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="?android:colorBackground"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/stateBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            app:layout_constraintBottom_toTopOf="@id/seekPanel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/modeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/modeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="@string/modeSeq"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/modeSwitch"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sequenceDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/currentState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/stateStopped"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/stateSep"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/stateSep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/longdash"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/stateRep"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/stateRep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/empty"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/stateRepSep"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/stateRepSep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/sep"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/stateRepCount"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/stateRepCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5sp"
+                    android:text="@string/empty"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/seekPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/controlPanel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/progressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/playerDuration">
+
+                <com.github.choreolooper.MarkedSeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/pauseProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:indeterminate="false"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/playerTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:text="@string/empty"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="@id/progressContainer"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/playerDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:text="@string/empty"
+                android:textSize="16sp"
+                app:layout_constraintRight_toRightOf="@id/progressContainer"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/controlPanel"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageButton
+                android:id="@+id/beginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/seekBegin"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/begin"
+                app:layout_constraintBottom_toBottomOf="@+id/prevBtn"
+                app:layout_constraintEnd_toStartOf="@+id/prevBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/prevBtn" />
+
+            <ImageButton
+                android:id="@+id/prevBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/seekBegin"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/back"
+                app:layout_constraintBottom_toBottomOf="@+id/backBtn"
+                app:layout_constraintEnd_toStartOf="@+id/backBtn"
+                app:layout_constraintStart_toEndOf="@+id/beginBtn"
+                app:layout_constraintTop_toTopOf="@+id/backBtn" />
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/back10"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/back10"
+                app:layout_constraintBottom_toBottomOf="@+id/playBtn"
+                app:layout_constraintEnd_toStartOf="@+id/playBtn"
+                app:layout_constraintStart_toEndOf="@+id/prevBtn"
+                app:layout_constraintTop_toTopOf="@+id/playBtn" />
+
+            <ImageButton
+                android:id="@+id/playBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/play_pause"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/play"
+                app:layout_constraintBottom_toBottomOf="@+id/fwdBtn"
+                app:layout_constraintEnd_toStartOf="@+id/fwdBtn"
+                app:layout_constraintStart_toEndOf="@+id/backBtn"
+                app:layout_constraintTop_toTopOf="@+id/fwdBtn" />
+
+            <ImageButton
+                android:id="@+id/fwdBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/fwd10"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fwd10"
+                app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+                app:layout_constraintEnd_toStartOf="@+id/nextBtn"
+                app:layout_constraintStart_toEndOf="@+id/playBtn"
+                app:layout_constraintTop_toTopOf="@+id/nextBtn" />
+
+            <ImageButton
+                android:id="@+id/nextBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/seekEnd"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/next"
+                app:layout_constraintEnd_toStartOf="@+id/endBtn"
+                app:layout_constraintStart_toEndOf="@+id/fwdBtn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/endBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/seekEnd"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/end"
+                app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/nextBtn"
+                app:layout_constraintTop_toTopOf="@+id/nextBtn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">ChoreoLooper</string>
+    <string name="statePlaying">Wiedergabe</string>
+    <string name="statePre">Warten auf Anfang</string>
+    <string name="stateUninit">Keine Datei</string>
+    <string name="modeTitle">Wiedergabemodus</string>
+    <string name="modeNormal">Normal</string>
+    <string name="modeSeq">Sequenz</string>
+    <string name="empty" translatable="false">--</string>
+    <string name="sep" translatable="false">/</string>
+    <string name="actionOpen">Öffnen</string>
+    <string name="actionSave">Speichern</string>
+    <string name="paramPre">Vorlauf:</string>
+    <string name="paramPreDefault" translatable="false">00:10</string>
+    <string name="paramStart">Anfang:</string>
+    <string name="paramStartDefault" translatable="false">00:00</string>
+    <string name="paramEnd">Ende:</string>
+    <string name="paramEndDefault" translatable="false">00:00</string>
+    <string name="paramReps">Wiederholungen:</string>
+    <string name="paramRepDefault" translatable="false">5</string>
+    <string name="paramInter">Abstand:</string>
+    <string name="paramInterDefault" translatable="false">00:03</string>
+    <string name="stateStopped">Pause</string>
+    <string name="stateInter">Warten auf Wiederholung</string>
+    <string name="seekBegin">Zum Anfang</string>
+    <string name="back10" translatable="false">-10s</string>
+    <string name="play_pause">Wiedergabe/Pause</string>
+    <string name="fwd10" translatable="false">+10s</string>
+    <string name="setBegin">Anfang setzen</string>
+    <string name="setEnd">Ende setzen</string>
+    <string name="seekEnd">Zum Ende</string>
+    <string name="showDetails">Mehr anzeigen</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="saveInto">Überschreiben</string>
+    <string name="fullScene">Ganzes Lied</string>
+    <string name="delete">Entfernen</string>
+    <string name="loaderError">Audio konnte nicht geladen werden.</string>
+    <string name="setMark">Marke setzen</string>
+    <string name="edit_scene_title">Bearbeiten</string>
+    <string name="notes">Notizen</string>
+    <string name="name">Name</string>
+    <string name="saveError">Speichern fehlgeschlagen</string>
+    <string name="noChoreoMsg">Keine Kürdatei</string>
+    <string name="mediaError">Musik-Ladefehler</string>
+    <string name="replaceMedia">Mediendatei konnte nicht geöffnet werden.\nAndere Datei auswählen?</string>
+    <string name="longdash" translatable="false">—</string>
+    <string name="time0" translatable="false">00:00</string>
+    <string name="autoMarker">" [auto]"</string>
+    <string name="seqBasename">"Sequenz "</string>
+    <string name="markBasename">"Marke "</string>
+    <string name="about">Über ChoreLooper</string>
+    <string name="manual">Benutzung</string>
+    <string name="home">Start</string>
+    <string name="files">Dateien</string>
+    <string name="back">Zurück</string>
+    <string name="time_sep" translatable="false">:</string>
+</resources>

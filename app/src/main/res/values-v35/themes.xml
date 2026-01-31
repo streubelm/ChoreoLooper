@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ChoreoLooper" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <!-- main buttons -->
+        <item name="colorPrimary">@color/dark_blue</item>
+        <!-- unused -->
+        <item name="colorPrimaryVariant">@color/dark_blue</item>
+        <!-- buttons in title bar -->
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Secondary brand color (dimmed). -->
+        <!-- title bar, time picker buttons -->
+        <item name="colorSecondary">@color/blue</item>
+        <!-- unused -->
+        <item name="colorSecondaryVariant">@color/blue</item>
+        <!-- text field borders -->
+        <item name="colorOnSecondary">@color/dark_white</item>
+
+        <!-- Accent color for seekbar slider -->
+        <item name="colorAccent">@color/blue</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/blue</item>
+        <item name="android:windowTitleBackgroundStyle">@color/blue</item>
+
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+
+        <!-- top-side shadow gradient -->
+        <item name="shadowTop">@drawable/shadowtop</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:timePickerStyle">@style/MyTimePickerStyle</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="thickness">3.66dp</item>
+        <item name="barLength">28dp</item>
+        <item name="gapBetweenBars">5.33dp</item>
+        <item name="drawableSize">50dp</item>
+        <item name="color">@color/white</item>
+        <item name="arrowShaftLength">28dp</item>
+        <item name="arrowHeadLength">12dp</item>
+    </style>
+
+    <style name="ThemeOverlay.AppCompat.navTheme">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorControlHighlight">@color/black</item>
+    </style>
+
+    <style name="MyTimePickerStyle" parent="android:Widget.Material.TimePicker">
+        <item name="android:timePickerMode">spinner</item>
+    </style>
+
+    <style name="RoundedBGButtonStyle" parent="android:Widget.Material.Button">
+        <item name="android:backgroundTint">@color/blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

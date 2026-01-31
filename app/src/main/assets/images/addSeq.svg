@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="5.0000019mm"
+   height="5mm"
+   viewBox="0 0 5.0000019 5"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-121.09296,-33.333287)">
+    <g
+       id="g94"
+       transform="translate(59.92639,5.056807)">
+      <g
+         id="g25-7"
+         transform="translate(-62.979017,11.071498)">
+        <g
+           id="g24-3">
+          <path
+             style="fill:none;stroke:#004284;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+             d="m 124.85953,21.059571 h -0.51394 v 0.945412 h 0.51394"
+             id="path22-6" />
+          <path
+             style="fill:none;stroke:#004284;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+             d="m 128.43165,21.059571 h 0.51394 v 0.945412 h -0.51394"
+             id="path23-1" />
+        </g>
+        <path
+           style="fill:none;stroke:#004284;stroke-width:0.400001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 128.54969,21.532277 h -3.80821"
+           id="path17-7-6-2" />
+      </g>
+      <g
+         id="g28"
+         transform="matrix(0.42985847,-0.42985847,0.42985847,0.42985847,1.0997898,75.776481)"
+         style="stroke-width:1.64497">
+        <path
+           style="fill:none;stroke:#004284;stroke-width:1.31598;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="M 127.5615,20.845655 124.7064,17.99055"
+           id="path27" />
+        <path
+           style="fill:none;stroke:#004284;stroke-width:1.31598;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 124.7064,20.845655 2.8551,-2.855105"
+           id="path28" />
+      </g>
+    </g>
+  </g>
+</svg>

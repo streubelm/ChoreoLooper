@@ -1,0 +1,417 @@
+<html lang="de-DE">
+<head>
+    <link rel="stylesheet" href="stylesheet.css">
+    <meta charset="UTF-8">
+    <title>Bedienung</title>
+</head>
+<body>
+
+<h1>Bedienung</h1>
+
+<p>
+    <em>ChoreoLooper</em> bietet umfangreiche Funktionalität zur Unterstützung beim Kürtraining.
+    Die Bedienung ist dabei so gestaltet, dass möglichst viele Funktionen auch während des Abspielens
+    direkt zugänglich sind.
+</p>
+
+
+<h2 id="contents">Übersicht</h2>
+
+<ol>
+    <li>
+        <a href="#usecases">Gängige Aufgaben</a>
+        <ol>
+            <li><a href="#use_file">Importieren und Exportieren von Musik und Küren</a></li>
+            <li><a href="#use_seq">Erstellen einer Sequenz</a></li>
+            <li><a href="#use_mark">Markieren von Musikstellen</a></li>
+            <li><a href="#use_play">Abspielen von Sequenzen</a></li>
+        </ol>
+    </li>
+    <li>
+        <a href="#ui">Überblick der Bedienoberfläche</a>
+        <ol>
+            <li><a href="#ui_file">Dateiaktionen</a></li>
+            <li><a href="#ui_play">Wiedergabesteuerung</a></li>
+            <li><a href="#ui_seqbar">Sequenzaktionen</a></li>
+            <li><a href="#ui_seq">Sequenzbearbeitung</a></li>
+            <li><a href="#ui_markbar">Markierungsaktionen</a></li>
+            <li><a href="#ui_mark">Markierungsbearbeitung</a></li>
+        </ol>
+    </li>
+</ol>
+
+
+<h2 id="usecases">Gängige Aufgaben</h2>
+
+
+<h3 id="use_file">Importieren und Exportieren von Musik und Küren</h3>
+
+<p>
+    Um eine Kürmusik mit <em>ChoreoLooper</em> zu verwenden, muss diese in der App importiert werden.
+    Dazu muss die Musik als Audiodatei auf dem Gerät gespeichert sein. Alle gängigen Dateiformate
+    werden unterstützt.
+</p>
+
+<h4>Audiodatei importieren</h4>
+
+<img class=line-img src="images/line-open.svg" alt="Öffnen"/>
+<p>Tippe auf die "Öffnen"-Schaltfläche in der Titelleiste, und wähle die gewünschte Audiodatei aus.</p>
+
+
+<h4>Kürdatei exportieren</h4>
+<p>
+    Alle in der App angelegten Sequenzen, Markierungen und Notizen können als Kürdatei im JSON-Format
+    exportiert werden. Diese Dateien können in späteren Trainings wieder verwendet und auch
+    an Andere weitergegeben werden.
+</p>
+
+<img class=line-img src="images/line-save.svg" alt="Speichern"/>
+<p>
+    Tippe dazu auf das "Speichern"-Symbol in der Titelleiste, und wähle einen geeigneten Speicherort
+    und Dateinamen für die Kürdatei aus.
+</p>
+<p class=box>
+    <b>Wichtig:</b> Änderungen an Sequenzen, Markierungen oder Notizen werden nicht automatisch
+    gespeichert. Um Änderungen zu sichern, muss die Kür erneut exportiert werden. Dabei kann im
+    Exportdialog auch eine bestehende JSON-Datei ausgewählt werden, um sie mit den geänderten
+    Kürdaten zu überschreiben.
+</p>
+
+<h4>Kürdatei importieren</h4>
+<p>
+    Der Import von Kürdateien funktioniert genauso wie bei reinen Audiodateien:
+</p>
+
+<img class=line-img src="images/line-open.svg" alt="Öffnen"/>
+<p>Tippe auf die "Öffnen"-Schaltfläche in der Titelleiste, und wähle die gewünschte JSON-Kürdatei aus.</p>
+<p class=box>
+    <b>Wichtig:</b> Die JSON-Datei enthält nur die in der App angelegten Daten, nicht die Kürmusik selbst.
+    Stattdessen ist lediglich der Pfad zur verwendeten Audiodatei gespeichert. Wenn die Audiodatei
+    nach dem Speichern gelöscht, verschoben oder umbenannt wurde, muss beim Importieren der Kür
+    eine andere Audiodatei ausgewählt werden. Anschließend empfiehlt es sich, die Kür erneut zu
+    speichern, um die aktualisierte Musik in der Kürdatei zu sichern.
+</p>
+<p>
+    Aufgrund des gewählten Speicherformats muss beim Weitergeben der Kürdatei immer zusätzlich die
+    Kürmusik separat geteilt werden.
+</p>
+
+
+<h3 id="use_seq">Erstellen einer Sequenz</h3>
+
+<img class=line-img src="images/line-addSeq.svg" alt="Neue Sequenz"/>
+<p>
+    Um eine neue Sequenz zu anzulegen, tippe auf die "Hinzufügen"-Schaltfläche in der Sequenzleiste.
+    Im Hauptbereich der App werden daraufhin die Steuerelemente zum Bearbeiten der Eigenschaften
+    der neuen Sequenz angezeigt. Insbesondere kann der Name bearbeitet werden, und der Sequenz können
+    Notizen hinzugefügt werden, beispielsweise Trainingsanweisungen oder vereinbarte Signale.
+</p>
+<p>Das übliche Vorgehen zum Erstellen einer Sequenz ist folgendes:</p>
+<ol>
+    <li>
+        Springe mittels der Wiedergabesteuerung zu einer Musikstelle kurz vor dem gewünschten Beginn
+        der Sequenz.
+    </li>
+    <li>
+        Starte die Wiedergabe, um den genauen Startzeitpunkt zu finden. Verwende die
+        <img src="images/addSeq.svg"/> "Hinzufügen"-Schaltfläche, um eine neue Sequenz an der
+        aktuellen Stelle zu beginnen. Alternativ kann die Startposition auch nur über die
+        Wiedergabesteuerung ausgewählt werden.
+    </li>
+    <li>
+        Setze die Wiedergabe fort, um den genauen Endzeitpunkt zu finden. Häufig ist es zweckmäßig,
+        mit Hilfe der Wiedergabesteuerung direkt an eine Position kurz vor dem gewünschten Endpunkt
+        zu springen. Verwende die <img src="images/setEnd.svg"/> "Ende Setzen"-Schaltfläche im
+        Hauptbereich der App, um die aktuelle Position als Endzeitpunkt der Sequenz festzulegen.
+    </li>
+    <li>
+        Start- und Endzeitpunkt der Sequenz können auch später jederzeit über die
+        <img src="images/setBegin.svg"/> "Anfang Setzen" und <img src="images/setEnd.svg"/>
+        "Ende Setzen"-Schaltflächen bearbeitet werden. Alternativ können die Zeiten im
+        <img src="images/edit.svg"/> "Eigenschaften"-Dialog auch manuell eingegeben werden.
+    </li>
+    <li>
+        Verwende den <img src="images/edit.svg"/> "Eigenschaften"-Dialog, um weitere Einstellungen
+        zu bearbeiten, wie beispielsweise Vorlauf- und Pausendauer oder die Anzahl der Wiederholungen.
+        Wenn für die Zahl der Wiederholungen der Wert "0" eingegeben wird, wird die Sequenz unendlich
+        oft wiederholt.
+    </li>
+    <li>
+        Die Steuerelemente zum Bearbeiten der Sequenz können auch später jederzeit über die
+        <img src="images/editSeq.svg"/> "Sequenz Bearbeiten"- Schaltfläche wieder aufgerufen werden.
+    </li>
+    <li>
+        Verwende die <img src="images/delSeq.svg"/> "Sequenz Entfernen"-Schaltfläche, um die
+        ausgewählte Sequenz wieder zu löschen.
+    </li>
+</ol>
+
+
+<h3 id="use_mark">Markieren von Musikstellen</h3>
+
+<p>
+    <em>ChoreoLooper</em> erlaubt es, beliebig viele Musikstellen speziell zu markieren, und diesen
+    Markierungen Notizen hinzuzufügen. Mögliche Anwendungsfälle hierfür sind beispielsweise:
+</p>
+<ul>
+    <li>Markieren und Beschreiben von Signaltönen, auch zur Weitergabe an die Fahrer</li>
+    <li>Hinzufügen von Notizen zu einzelnen Stellen innerhalb einer längeren Sequenz</li>
+    <li>
+        Merken von Musikstellen, während die Wiedergabe läuft, z.B. um bei der anschließenden
+        Kürbesprechung relevante Stellen aus dem aktuellen Durchlauf schnell wiederzufinden
+    </li>
+    <li>
+        Speichern von Zeitpunkten, die später als Start- oder Endzeit von Sequenzen verwendet
+        werden sollen
+    </li>
+    <li>...</li>
+</ul>
+
+<img class=line-img src="images/line-addMark.svg" alt="Neue Markierung"/>
+<p>
+    Um eine Markierung an der aktuellen Musikstelle hinzuzufügen, tippe auf die "Hinzufügen"-Schlatfläche
+    in der Markierungsleiste. Im Hauptbereich der App werden daraufhin die Steuerelemente zum
+    Bearbeiten der Eigenschaften der neuen Markierung angezeigt. Insbesondere kann der Name bearbeitet
+    werden, und der Markierung können Notizen hinzugefügt werden.
+</p>
+<p>
+    Die Position der Markierung kann später jederzeit mit Hilfe der
+    <img src="images/setPos.svg" style="height:0.4lh; padding-bottom:0.1lh;"/>
+    "Position Setzen"-Schaltfläche bearbeitet werden. Alternativ ist es möglich, den Zeitpunkt
+    manuell anzugeben.
+</p>
+<p>
+    Analog zur Bearbeitung von Sequenzen können die Steuerelemente für Markierungen über die
+    <img src="images/editmark.svg"/> "Markierung Bearbeiten"-Schaltfläche aufgerufen werden, und die
+    <img src="images/delMark.svg"/> "Markierung Entfernen"-Schaltfläche erlaubt das Löschen der
+    ausgewählten Markierung.
+</p>
+
+
+<h3 id="use_play">Abspielen von Sequenzen</h3>
+
+<p>
+    Die Wiedergabe in <em>ChoreoLooper</em> ist modal, wodurch die App sowohl zur normalen
+    Medienwiedergabe als auch zum automatischen Abspielen von Sequenzen verwendet werden kann.
+</p>
+<img class=line-img src="images/line-seq.svg"/>
+<p>
+    Standardmäßig ist der normale Modus aktiv. Um in den Sequenzmodus zu wechseln, verwende den
+    "Sequenz"-Schalter in der Fußzeile. Ist dieser aktiviert, wird lediglich der Musikabschnitt der aktuellen
+    Sequenz abgespielt und entsprechend der Sequenzeinstellungen wiederholt.
+    Während es in beiden Modi möglich ist, Sequenzen anzulegen und zu bearbeiten, empfiehlt es sich
+    meist, für diese Aufgaben in den normalen Modus zurückzukehren.
+</p>
+<p>
+    Einige Elemente der Wiedergabesteuerung haben in beiden Modi verschiedene Funktionen. Diese
+    werden im Kapitel <a href="#ui_play">Mediensteuerung</a> genauer beschrieben.
+</p>
+
+
+
+<h2 id="ui">Überblick der Bedienoberfläche</h2>
+
+<h3 id="ui_file">Dateiaktionen</h3>
+
+<img class=line-img src="images/line-filebar.svg"/>
+<p>
+    Die Dateileiste in der Kopfzeile der App enthält das <img src="images/menu.svg"/> App-Menü sowie
+    Schlatflächen zum <img src="images/open.svg"/> Öffnen und <img src="images/save.svg"/> Speichern
+    von Audio- und Kürdateien. Außerdem wird der Name der aktuell geöffneten Datei angezeigt.
+</p>
+
+
+<h3 id="ui_play">Wiedergabesteuerung</h3>
+
+<p>
+    Die Fußzeile der App enthält alle Elemente, die zur Steuerung der Medienwiedergabe nötig sind.
+    Diese können je nach Wiedergabemodus unterschiedliche Funktionen haben.
+</p>
+
+<h4>Moduszeile</h4>
+
+<img class=line-img src="images/line-statebar.svg"/>
+<p>
+    <em>ChoreoLooper</em> verwendet zwei verschiedene Modi zur normalen Wiedergabe der gesamten
+    Kürmusik und zum wiederholten Abspielen von nutzerdefinierten Sequenzen. Zwischen diesen Modi
+    kann mit Hilfe des <img src="images/seq.svg"/> Sequenzschalters gewechselt werden.
+</p>
+<p>
+    Daneben wird der aktuelle Zustand der Wiedergabe angezeigt: Pause, Wiedergabe, Warten auf Anfang
+    oder Warten auf Wiederholung. Im Sequenzmodus werden neben dem Sequenzschalter außerdem die
+    Nummer der aktuellen Wiederholung der Sequenz sowie die Gesamtzahl der eingestellten
+    Wiederholungen angezeigt.
+</p>
+
+<h4>Suchleiste</h4>
+
+<img class=line-img src="images/line-seekbar.svg"/>
+<p>
+    Die Suchleiste zeigt die aktuelle Position in der Kürmusik an. Außerdem wird die aktive
+    Sequenz hervorgehoben, und alle vorhandenen Markierungen werden angezeigt.
+</p>
+<p>
+    Um das Springen an relevante Musikstellen zu erleichtern, rastet die Suchleiste an Markierungen
+    sowie an Start- und Endposition der angezeigten Sequenz ein. Beim Springen zu einer Markierung
+    oder an den Anfang einer Sequenz wird diese im Hauptbereich der App zur Bearbeitung angezeigt.
+</p>
+<p>
+    Oberhalb der Suchleiste werden links die aktuelle Zeit im gesamten Lied angezeigt, und rechts
+    die Gesamtdauer der Kürmusik.
+</p>
+<p>
+    Solange im Sequenzmodus auf den Beginn der Wiedergabe oder die nächste Wiederholung gewartet wird,
+    wird die Suchleiste durch einen Fortschrittsbalken ersetzt, welcher die verbleibende Pausenzeit
+    angibt. Auch die Zeitangaben über der Suchleiste werden entsprechend angepasst.
+</p>
+
+<h4>Steuerelemente</h4>
+
+<img class=line-img src="images/line-control.svg"/>
+<p>Im normalen Wiedergabemodus sind die Funktionen der Steuerelemente wie folgt:</p>
+<dl>
+    <dt><img src="images/begin.svg"/> Anfang / <img src="images/end.svg"/> Ende</dt>
+        <dd>Springt zum Anfang bzw. Ende der Kürmusik.</dd>
+    <dt><img src="images/prev.svg"/> Zurück / <img src="images/next.svg"/> Vor</dt>
+        <dd>
+            Springt zur vorherigen bzw. nächsten Markierung. Diese Markierung wird dann auch im
+            Hauptbereich der App zur Bearbeitung angezeigt.
+        </dd>
+    <dt><img src="images/back10.svg"/> Schritt zurück / <img src="images/fwd10.svg"/> vor</dt>
+        <dd>Springt um fünf Sekunden nach hinten bzw. vorne.</dd>
+    <dt><img src="images/play.svg"/> Start / <img src="images/pause.svg"/> Pause</dt>
+        <dd>Startet oder pausiert die Wiedergabe an der aktuellen Position.</dd>
+</dl>
+
+<p>Die folgenden Elemente haben im Sequenzmodus eine abweichende Funktion:</p>
+<dl>
+    <dt><img src="images/begin.svg"/> Anfang / <img src="images/end.svg"/> Ende</dt>
+        <dd>Springt zum Anfang bzw. Ende der ausgewählten Sequenz.</dd>
+    <dt><img src="images/play.svg"/> Start / <img src="images/stop.svg"/> Stopp</dt>
+        <dd>
+            Startet oder beendet die Sequenzwiedergabe. Die Wiedergabe beginnt immer am Beginn der
+            Sequenz, eventuell nach einer nutzerdefinierten Vorlaufzeit. Die Wiedergabe kann nur
+            vollständig beendet, aber nicht pausiert werden.
+        </dd>
+</dl>
+
+
+<h3 id="ui_seqbar">Sequenzaktionen</h3>
+
+<img class=line-img src="images/line-seqbar.svg"/>
+
+<p>Die erste Zeile unterhalb der Titelleiste dient dem Auswählen, erstellen und löschen von Sequenzen.</p>
+<dl>
+    <dt><img src="images/editSeq.svg"/> Sequenz bearbeiten</dt>
+        <dd>Zeigt die aktuell ausgewählte Sequenz im Hauptbereich der App zur Bearbeitung an.</dd>
+    <dt><img src="images/delSeq.svg"/> Sequenz löschen</dt>
+        <dd>
+            Entfernt die aktuell ausgewählte Sequenz. Wenn keine weiteren Sequenzen vorhanden sind,
+            wird automatisch eine Standardsequenz erstellt, in welcher die gesamte Kürmusik endlos
+            wiederholt wird. Diese Sequenz wird mit "[auto]" markiert und kann nicht gelöscht werden,
+            lässt sich aber wie jede andere Sequenz bearbeiten. Nach der ersten Bearbeitung wird
+            die "[auto]"-Markierung entfernt; anschließend verhält sie sich wie andere nutzerdefinierte
+            Sequenzen.
+        </dd>
+    <dt>Sequenz auswählen</dt>
+        <dd>
+            Das Dropdown-Menü in der Mitte enthält alle verfügbaren Sequenzen. Die ausgewählte Sequenz wird in der
+            Suchleiste und im Hauptbereich der App zur Bearbeitung angezeigt. Außerdem wird hier
+            ausgewählt, welche Sequenz im Sequenzwiedergabemodus abgespielt wird.
+        </dd>
+    <dt><img src="images/addSeq.svg"/> Sequenz erstellen</dt>
+        <dd>
+            Erstellt eine neue Sequenz, die an der aktuellen Position beginnt und bis zum Ende des
+            Liedes dauert. Die neue Sequenz wird als aktiv ausgewählt und im Hauptbereich der App
+            zur weiteren Bearbeitung angezeigt.
+        </dd>
+</dl>
+
+
+<h3 id="ui_seq">Sequenzbearbeitung</h3>
+
+<img class=line-img src="images/line-seqView.svg"/>
+<p>
+    Wenn eine Sequenz zur Bearbeitung ausgewählt ist, werden im Hauptbereich der App alle Elemente
+    zur Bearbeitung der Eigenschaften der Sequenz angezeigt.
+</p>
+
+<dl>
+    <dt>Name</dt>
+        <dd>
+            Der Name der Sequenz wird in der Sequenzauswahl verwendet und sollte so gewählt sein,
+            dass alle Fahrer und Trainer die Sequenz auf Anhieb identifizieren können.
+        </dd>
+    <dt><img src="images/edit.svg"/> Eigenschaften</dt>
+        <dd>
+            Diese Schaltfläche ruft einen Dialog mit weiteren Einstellmöglichkeiten auf. Diese sind:
+            <ul>
+                <li><i>Vorlauf:</i> Länge der Pause vor Beginn der Wiedergabe.</li>
+                <li><i>Anfang:</i> Startzeitpunkt des gewählten Musikausschnitts.</li>
+                <li><i>Ende:</i> Endzeitpunkt des gewählten Musikausschnitts.</li>
+                <li><i>Wiederholungen:</i> Anzahl der Wiederholungen des Musikausschnitts. Ein Wert
+                    von "0" steht hierbei für unbegrenzte Wiederholung.</li>
+                <li><i>Abstand:</i> Länge der Pause zwischen zwei Wiederholungen.</li>
+            </ul>
+        </dd>
+    <dt><img src="images/setBegin.svg"/> Anfang setzen</dt>
+        <dd>Setzt die aktuelle Position als Startzeitpunkt des Musikausschnitts.</dd>
+    <dt><img src="images/setEnd.svg"/> Ende setzen</dt>
+        <dd>Setzt die aktuelle Position als Endzeitpunkt des Musikausschnitts.</dd>
+    <dt>Notizen</dt>
+        <dd>Beliebiger Text, der zusammen mit der Sequenz gespeichert wird.</dd>
+</dl>
+
+
+<h3 id="ui_markbar">Markierungsaktionen</h3>
+
+<img class=line-img src="images/line-markBar.svg"/>
+
+<p>Die zweite Zeile unterhalb der Titelleiste dient dem Auswählen, erstellen und löschen von Markierungen.</p>
+<dl>
+    <dt><img src="images/editmark.svg"/> Markierung bearbeiten</dt>
+        <dd>Zeigt die aktuell ausgewählte Markierung im Hauptbereich der App zur Bearbeitung an.</dd>
+    <dt><img src="images/delMark.svg"/> Markierung löschen</dt>
+        <dd>
+            Entfernt die aktuell ausgewählte Markierung. Wenn weitere Markierungen vorhanden sind, wird
+            automatisch eine davon ausgewählt und im Hauptbereich der App zur Bearbeitung angezeigt.
+        </dd>
+    <dt>Markierung auswählen</dt>
+        <dd>
+            Das Dropdown-Menü enthält alle vorhandenen Markierungen. Die ausgewählte Sequenz wird
+            im Hauptbereich der App zur Bearbeitung angezeigt. Wenn aktuell keine Wiedergabe läuft,
+            springt die App außerdem zur Position der Markierung.
+        </dd>
+    <dt><img src="images/addMark.svg"/> Markierung erstellen</dt>
+        <dd>
+            Erstellt eine neue Markierung an der aktuellen Position. Die neue Sequenz wird im
+            Hauptbereich der App zur weiteren Bearbeitung angezeigt und zur Suchleiste hinzugefügt.
+        </dd>
+</dl>
+
+
+<h3 id="ui_mark">Markierungsbearbeitung</h3>
+
+<img class=line-img src="images/line-markView.svg"/>
+
+<p>
+    Wenn eine Markierung zur Bearbeitung ausgewählt ist, werden im Hauptbereich der App alle Elemente
+    zur Bearbeitung der Eigenschaften der Markierung angezeigt.
+</p>
+
+<dl>
+    <dt>Name</dt>
+        <dd>
+            Der Name der Markierung wird in der Markierungsauswahl verwendet und sollte so gewählt sein,
+            dass alle Fahrer und Trainer die Markierung auf Anhieb identifizieren können.
+        </dd>
+    <dt>Zeitpunkt</dt>
+        <dd>Position der Markierung in der Kürmusik.</dd>
+    <dt><img src="images/setPos.svg"/> Position setzen</dt>
+        <dd>Setzt die aktuelle Position als Position der Markierung.</dd>
+    <dt>Notizen</dt>
+        <dd>Beliebiger Text, der zusammen mit der Markierung gespeichert wird.</dd>
+</dl>
+
+</body>
+</html>

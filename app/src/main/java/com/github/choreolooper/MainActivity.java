@@ -18,10 +18,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +45,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +53,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -59,7 +65,8 @@ import java.util.Objects;
  * the navigation bar including all fragments accessed from it,
  * and the Player object.
  */
-public class MainActivity extends AppCompatActivity implements EditListener {
+public class MainActivity extends AppCompatActivity
+        implements EditListener, FileActionInterface {
 
     /// Select an audio or project file to load
     private static final int PICK_AUDIO_FILE = 2;
@@ -71,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements EditListener {
 
     /// currently opened project file
     TextView currentFile;
+
+    /// List of internal save files
+    List<String> internalFiles;
+    FileArrayAdapter navFilesAdapter;
 
     /// navigation menu drawer
     DrawerLayout drawerLayout;
@@ -135,29 +146,39 @@ public class MainActivity extends AppCompatActivity implements EditListener {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        View homeMenu = findViewById(R.id.nav_home);
+        homeMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int itemId = menuItem.getItemId();
-                if (itemId == R.id.nav_home || itemId == android.R.id.home) {
-                    showFragment(mainFragment);
-                } else if (itemId == R.id.nav_manual) {
-                    htmlFragment.loadPage("file:///android_asset/manual.html");
-                    showFragment(htmlFragment);
-                } else if (itemId == R.id.nav_about) {
-                    htmlFragment.loadPage("file:///android_asset/about.html");
-                    showFragment(htmlFragment);
-                } else {
-                    // this is a choreography file entry
-                    assert (menuItem.getTitle() != null);
-                    readInternal(menuItem.getTitle().toString());
-                    showFragment(mainFragment);
-                }
-
-                return true;
+            public void onClick(View v) {
+                showFragment(mainFragment);
             }
         });
+
+        View manualMenu = findViewById(R.id.nav_manual);
+        manualMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                htmlFragment.loadPage("file:///android_asset/manual.html");
+                showFragment(htmlFragment);
+            }
+        });
+
+        View aboutMenu = findViewById(R.id.nav_about);
+        aboutMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                htmlFragment.loadPage("file:///android_asset/about.html");
+                showFragment(htmlFragment);
+            }
+        });
+
+
+        // list of internal save files
+        internalFiles = new ArrayList<>();
+        ListView fileItems = findViewById(R.id.nav_list_view);
+        navFilesAdapter = new FileArrayAdapter(MainActivity.this, internalFiles, this);
+        fileItems.setAdapter(navFilesAdapter);
+
 
         /*
          * File action buttons
@@ -306,6 +327,8 @@ public class MainActivity extends AppCompatActivity implements EditListener {
 
         mainFragment.sceneSpinner.setSelection(0);
         mainFragment.player.seekTo(0);
+
+        saveInternal();
     }
 
 
@@ -480,16 +503,16 @@ public class MainActivity extends AppCompatActivity implements EditListener {
      * internalFilePrefix.
      */
     private void updateFileList() {
-        Menu menu = navigationView.getMenu();
-        menu.removeGroup(R.id.nav_files);
+        internalFiles.clear();
+
         File[] allFiles = getApplicationContext().getFilesDir().listFiles();
         assert (allFiles != null);
         int count = 0;
         for (File file : allFiles) {
             if (!file.isFile() || !file.getName().startsWith(internalFilePrefix))
                 continue;
-            menu.add(R.id.nav_files, Menu.NONE, Menu.NONE,
-                    file.getName().substring(internalFilePrefix.length()));
+            internalFiles.add(file.getName().substring(internalFilePrefix.length()));
+            navFilesAdapter.notifyDataSetChanged();
             count ++;
         }
         Log.w("ChoreoLooper", "added" + count + "menu items");
@@ -604,6 +627,40 @@ public class MainActivity extends AppCompatActivity implements EditListener {
         builder.show();
     }
 
+
+    @Override
+    public void rename(String targetFile, String newName) {
+
+        try (InputStream in = openFileInput(internalFilePrefix + targetFile)) {
+            try (OutputStream out = openFileOutput(internalFilePrefix + newName, Context.MODE_PRIVATE)) {
+                int a;
+                while ((a = in.read()) != -1) {
+                    out.write((char) a);
+                }
+            }
+        } catch (IOException e) {
+            return;
+        }
+
+        deleteFile(internalFilePrefix + targetFile);
+
+        if (currentFile.getText().toString().equals(targetFile)) {
+            currentFile.setText(newName);
+        }
+    }
+
+
+    @Override
+    public void delete(String targetFile) {
+        deleteFile(internalFilePrefix + targetFile);
+    }
+
+
+    @Override
+    public void open(String targetFile) {
+        readInternal(targetFile);
+        showFragment(mainFragment);
+    }
 
     /**
      * Called by android when an Activity returns.

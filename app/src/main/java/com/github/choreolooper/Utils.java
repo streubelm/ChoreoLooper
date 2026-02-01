@@ -204,6 +204,40 @@ public class Utils {
         alertDialog.show();
     }
 
+
+    /**
+     * Allow the user to enter a string via an alert dialog.
+     *
+     * @param inflater LayoutInflater used to display the dialog
+     * @param current current string used as initial value
+     * @param target callback function for receiving the result
+     */
+    public static void pickString(LayoutInflater inflater, String current,
+                                  StringPickerTargetInterface target) {
+
+        View dialogView = inflater.inflate(R.layout.string_picker_dialog, null);
+        AlertDialog.Builder d = new AlertDialog.Builder(dialogView.getContext());
+        d.setView(dialogView);
+
+        EditText picker = dialogView.findViewById(R.id.dialog_string_picker);
+        picker.setText(current);
+        picker.setSingleLine(true);
+
+        d.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                target.setString(picker.getText().toString());
+            }
+        });
+        d.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        AlertDialog alertDialog = d.create();
+        alertDialog.show();
+    }
+
 }
 
 

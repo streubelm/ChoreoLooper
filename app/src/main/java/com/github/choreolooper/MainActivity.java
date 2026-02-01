@@ -11,11 +11,14 @@ TODO Marken nach Tag filtern
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -37,11 +40,15 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 
@@ -52,13 +59,15 @@ import java.util.Objects;
  * the navigation bar including all fragments accessed from it,
  * and the Player object.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EditListener {
 
     /// Select an audio or project file to load
     private static final int PICK_AUDIO_FILE = 2;
     /// Select or create a project file to write to
     private static final int PICK_SAVE_FILE = 3;
 
+    /// File name prefix added to internal save files
+    String internalFilePrefix = "ChoreoFile-";
 
     /// currently opened project file
     TextView currentFile;
@@ -93,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mainFragment = MainFragment.newInstance();
+        mainFragment.setEditListener(this);
+
         htmlFragment = HTMLFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction()
@@ -137,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_about) {
                     htmlFragment.loadPage("file:///android_asset/about.html");
                     showFragment(htmlFragment);
+                } else {
+                    // this is a choreography file entry
+                    assert (menuItem.getTitle() != null);
+                    readInternal(menuItem.getTitle().toString());
+                    showFragment(mainFragment);
                 }
 
                 return true;
@@ -152,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveInternal();
                 openFile(false);
             }
         });
@@ -161,10 +178,32 @@ public class MainActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveInternal();
                 saveFile();
             }
         });
 
+    }
+
+
+    /**
+     * Called by android on application start or resume, after all other initialization.
+     * <p/>
+     * Reload list of choreos in internal app memory
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateFileList();
+    }
+
+
+    /**
+     * Listener callback updating the internal save file on any edit
+     */
+    @Override
+    public void notifyChange() {
+        saveInternal();
     }
 
 
@@ -431,6 +470,75 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+
+    /**
+     * Update the list of files in the internal storage.
+     * <p/>
+     * Project files are identified by the the file name prefix defined in
+     * internalFilePrefix.
+     */
+    private void updateFileList() {
+        Menu menu = navigationView.getMenu();
+        menu.removeGroup(R.id.nav_files);
+        File[] allFiles = getApplicationContext().getFilesDir().listFiles();
+        assert (allFiles != null);
+        int count = 0;
+        for (File file : allFiles) {
+            if (!file.isFile() || !file.getName().startsWith(internalFilePrefix))
+                continue;
+            menu.add(R.id.nav_files, Menu.NONE, Menu.NONE,
+                    file.getName().substring(internalFilePrefix.length()));
+            count ++;
+        }
+        Log.w("ChoreoLooper", "added" + count + "menu items");
+    }
+
+
+    /**
+     * Write configuration to a file in local storage.
+     * <p/>
+     * The target file is determined by the current file name and extended
+     * by the internal file name prefix.
+     */
+    private void saveInternal() {
+        String json = exportJSON();
+        if (json.isEmpty())
+            return;
+        try (FileOutputStream file = openFileOutput(
+                internalFilePrefix + currentFile.getText().toString(),
+                Context.MODE_PRIVATE)) {
+            file.write(json.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        updateFileList();
+    }
+
+
+    /**
+     * Read configuration from a file in local storage.
+     *
+     * @param name name of the file to be loaded, excluding the internal file name prefix.
+     */
+    private void readInternal(String name) {
+        String json = "";
+        try (FileInputStream file = openFileInput(internalFilePrefix + name)) {
+            int a;
+            StringBuilder tmp = new StringBuilder();
+            while ((a = file.read()) != -1) {
+                tmp.append((char) a);
+            }
+            json = tmp.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        clearChoreo();
+        if (!parseJSON(json))
+            return;
+        finalizeFileLoad(name);
     }
 
 

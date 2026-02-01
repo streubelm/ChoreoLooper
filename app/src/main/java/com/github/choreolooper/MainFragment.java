@@ -38,6 +38,9 @@ public class MainFragment extends Fragment
     /// Fragment containing the detailed scene controls
     EditSceneFragment editSceneFragment;
 
+    /// Change listener for persisting changes
+    EditListener editListener;
+
     Fragment currentFragment;
 
     /// switch to edit scene view
@@ -169,6 +172,7 @@ public class MainFragment extends Fragment
 
                 sceneAdapter.notifyDataSetChanged();
                 sceneSpinner.setSelection(0);
+                editListener.notifyChange();
             }
         });
 
@@ -183,6 +187,7 @@ public class MainFragment extends Fragment
                 sceneList.add(newScene);
                 sceneAdapter.notifyDataSetChanged();
                 sceneSpinner.setSelection(sceneList.size()-1);
+                editListener.notifyChange();
 
                 showSceneFragment();
             }
@@ -257,6 +262,8 @@ public class MainFragment extends Fragment
                 } else {
                     showSceneFragment();
                 }
+
+                editListener.notifyChange();
             }
         });
 
@@ -276,6 +283,7 @@ public class MainFragment extends Fragment
                 markSpinner.setSelection(markList.size() - 1);
 
                 player.addMark(newMark);
+                editListener.notifyChange();
 
                 showMarkFragment();
             }
@@ -332,6 +340,16 @@ public class MainFragment extends Fragment
 
 
         return view;
+    }
+
+
+    /**
+     * Register an edit callback triggered on any change to a scene.
+     *
+     * @param listener listener subscribed to scene edits
+     */
+    public void setEditListener(EditListener listener) {
+        editListener = listener;
     }
 
 
@@ -485,6 +503,7 @@ public class MainFragment extends Fragment
     @Override
     public void notifyMarkEdit() {
         markAdapter.notifyDataSetChanged();
+        editListener.notifyChange();
     }
 
     /**
@@ -498,5 +517,7 @@ public class MainFragment extends Fragment
             !(currentScene.isAuto && sceneList.size() == 1)) {
             enableButton(deleteSceneBtn);
         }
+
+        editListener.notifyChange();
     }
 }

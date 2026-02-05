@@ -68,10 +68,12 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity
         implements EditListener, FileActionInterface {
 
-    /// Select an audio or project file to load
+    /// Select an audio file to replace the current one
     private static final int PICK_AUDIO_FILE = 2;
+    ///  Select an audio or project file to load
+    private static final int PICK_PROJECT_FILE = 3;
     /// Select or create a project file to write to
-    private static final int PICK_SAVE_FILE = 3;
+    private static final int PICK_SAVE_FILE = 4;
 
     /// File name prefix added to internal save files
     String internalFilePrefix = "ChoreoFile-";
@@ -323,11 +325,14 @@ public class MainActivity extends AppCompatActivity
             mainFragment.sceneAdapter.notifyDataSetChanged();
         }
 
-        currentFile.setText(name);
+        if (name != null) {
+            currentFile.setText(name);
+        }
 
+        if (!mainFragment.markList.isEmpty()) {
+            mainFragment.markSpinner.setSelection(0);
+        }
         mainFragment.sceneSpinner.setSelection(0);
-        mainFragment.player.seekTo(0);
-
         saveInternal();
     }
 
@@ -357,8 +362,10 @@ public class MainActivity extends AppCompatActivity
 
         if (!mediaOnly) {
             clearChoreo();
+            startActivityForResult(intent, PICK_PROJECT_FILE);
+        } else {
+            startActivityForResult(intent, PICK_AUDIO_FILE);
         }
-        startActivityForResult(intent, PICK_AUDIO_FILE);
     }
 
 
@@ -489,7 +496,6 @@ public class MainActivity extends AppCompatActivity
         // Usually happens when read permissions are not present.
         if (!mainFragment.player.loadFile(media)) {
             requestNewMedia();
-            return false;
         }
 
         return true;
@@ -526,6 +532,8 @@ public class MainActivity extends AppCompatActivity
      * by the internal file name prefix.
      */
     private void saveInternal() {
+        if (mainFragment.player.getUri() == null) return;
+
         String json = exportJSON();
         if (json.isEmpty())
             return;
@@ -682,7 +690,7 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, resultData);
 
         // Open File: file chooser returned an URI
-        if (requestCode == PICK_AUDIO_FILE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == PICK_PROJECT_FILE && resultCode == Activity.RESULT_OK) {
             Uri uri = null;
             if (resultData == null)
                 return;
@@ -727,6 +735,26 @@ public class MainActivity extends AppCompatActivity
             String name = path[path.length - 1].split("\\.")[0];
             finalizeFileLoad(name);
 
+        } else if (requestCode == PICK_AUDIO_FILE && resultCode == Activity.RESULT_OK) {
+            Uri uri = null;
+            if (resultData == null)
+                return;
+
+            uri = resultData.getData();
+            if (uri == null || uri.getPath() == null)
+                return;
+
+            if (getContentResolver().getType(uri) != null) {
+                // Store access permission and load the file
+                getApplicationContext().getContentResolver().takePersistableUriPermission(uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                if (!mainFragment.player.loadFile(uri)) {
+                    // Request loading new audio file
+                    alertLoaderError(getResources().getString(R.string.mediaError));
+                    return;
+                }
+            }
+            finalizeFileLoad(null);
         // Save File: File creation dialog returned an URI
         } else if (requestCode == PICK_SAVE_FILE && resultCode == Activity.RESULT_OK) {
 

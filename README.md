@@ -22,6 +22,9 @@ andere Fahrer weitergegeben werden.
 
 Die App wird zeitnah im Google Play Store veröffentlicht. Bis dahin steht die jeweils aktuelle Version als APK-Paket unter [Releases](https://github.com/streubelm/ChoreoLooper/releases) zum Download bereit.
 
+**Alpha-Tester gesucht!** <br/>
+Für die Freigabe im Google Play Store werden noch Tester gesucht. Wenn Du dazu beitragen willst, dass *ChoreoLooper* fehlerfrei läuft und auch über den Google Play Store bereitgestellt werden kann, kontaktiere mich bitte per E-Mail an [streubelmaximilian@gmail.com](mailto:streubelmaximilian@gmail.com). Vielen Dank!
+
 
 ## Verwendung ##
 
@@ -47,38 +50,4 @@ Wenn Du bei der Entwicklung unterstützen willst, sei es mit Code, Übersetzunge
 
 ## Versionsverlauf ##
 
-* **1.02.07**: Erstes öffentliches Release
-  - Umstrukturierung des Hauptbereichs in mehrere Fragmente
-  - Einstellungsdialoge verwenden intern Millisekunden
-  - Kein String-parsing in Einstellungsdialogen
-  - Verhindern von automatischem Standby
-  - Reaktive Farben zur Unterstützung von Dark Modes
-* **1.02.06**: Erstes (internes) Release
-  - Richtiges Verhalten des Zurück-Buttons in HTML-Fragmenten
-* **0.02.5**: Umstrukturierung in mehrere Fragmente
-  - Menüleiste hinzugefügt
-  - Anleitung und Über diese App hinzugefügt
-  - Behebung von Layoutfehlern in Android >=15
-* **0.02.4**: Visuelle Verbesserungen für intuitivere Nutzerführung
-  - Inaktive und gedrückte Schaltflächen werden gekenzeichnet
-  - Autogenerierte Sequenz wird markiert
-  - Verbessertes Verhalten beim Bearbeiten der autogenerierten Sequenz
-* **0.02.3**: Umgestaltung der Oberfläche für kürzere Interaktionspfade
-  - Entfernen der Startseite
-  - Integration der Modussteuerung und Informationsanzeige in die Wiedergabeleiste
-  - Modussensitive Statusanzeige
-* **0.02.2**: Fehlerbehebungen, intuitiveres Verhalten
-  - Auswählen einer Markierung navigiert nur, wenn keine Wiedergabe aktiv ist
-  - Möglicher Absturz beim Entfernen von Sequenzen behoben
-* **0.02.1**: Mehrere Sequenzen, Markierungen
-  - Vollständige Unstrukturierung der Oberfläche mit mehrseitigem Layout
-  - Unterstützung für mehrere Sequenzen
-  - Markierungen
-  - Namen und Notizen für Sequenzen und Markierungen
-  - Erweiterung des Dateiformats um die neuen Features aufzunehmen
-  - Verbesserte Behandlung von feherhaften Audiolinks
-  - Zusätzliche Navigationselemente zum Springen zwischen POIs
-  - Darstellung von Bereichen und Marken in der Suchleiste
-* **0.01.1**: Erste funktionale Version
-  - Eine Sequenz
-  - Dateiimport und -Export
+Siehe [CHANGELOG.md](CHANGELOG.md)

@@ -70,8 +70,6 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v) {
                 actionInterface.delete(files.get(position));
-                files.remove(position);
-                notifyDataSetChanged();
             }
         });
 

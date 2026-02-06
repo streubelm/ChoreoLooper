@@ -19,15 +19,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -45,7 +41,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -268,8 +263,8 @@ public class MainActivity extends AppCompatActivity
     /**
      * Initiate writing the current configuration to a file.
      * <p/>
-     * Opens or creates a listener file, and calls writeFile from the
-     * activity result.
+     * Opens or creates a JSON file, and fills it from within the
+     * activity result callback.
      */
     private void saveFile() {
         // do not save if no media is opened
@@ -283,6 +278,37 @@ public class MainActivity extends AppCompatActivity
         intent.setType("application/json");
 
         startActivityForResult(intent, PICK_SAVE_FILE);
+    }
+
+
+    /**
+     * Load a new input file.
+     * <p/>
+     * This file can either be a media file to load into the player,
+     * of a project file created with saveFile. <br/>
+     * If it is explicitly requested to load only an audio file, the current choreography
+     * data is not removed when loading the new file. Use clearChoreo() if necessary.
+     *
+     * @param mediaOnly if true, filter only for audio files
+     */
+    private void openFile(boolean mediaOnly) {
+        // Start file creation intent, actual file read is done in Activity callback
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        String[] types;
+        if (mediaOnly) {
+            types = new String[] {"audio/*"};
+        } else {
+            types = new String[] {"audio/*", "application/json"};
+        }
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, types);
+
+        if (!mediaOnly) {
+            startActivityForResult(intent, PICK_PROJECT_FILE);
+        } else {
+            startActivityForResult(intent, PICK_AUDIO_FILE);
+        }
     }
 
 
@@ -304,6 +330,75 @@ public class MainActivity extends AppCompatActivity
         mainFragment.disableButton(mainFragment.editMarkBtn);
 
         mainFragment.markAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Load a new audio file into the player without modifying the chorography data.
+     *
+     * @param uri URI of the audio file. Assumed to be valid.
+     */
+    private void loadAudioFile(Uri uri) {
+        getApplicationContext().getContentResolver().takePersistableUriPermission(uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (!mainFragment.player.loadFile(uri)) {
+            // Request loading new audio file
+            alertLoaderError(getResources().getString(R.string.mediaError));
+        }
+    }
+
+
+    /**
+     * Load a new choreography project.
+     * <p/>
+     * This replaces the currently displayed choreography data.
+     * The opened file can be either a project JSON or an audio file.
+     *
+     * @param uri            URI of the file to be opened.
+     * @param name           Name to be used for the project.
+     * @param forceOverwrite If true, overwrite existing files without asking.
+     */
+    private void loadProjectFile(Uri uri, String name, boolean forceOverwrite) {
+
+        if (internalFiles.contains(name) && !forceOverwrite) {
+            // If file exists, display a warning.
+            // The dialog will call this function again with updated parameters.
+            warnOverwrite(uri, name);
+            return;
+        }
+
+        // we're replacing all content
+        clearChoreo();
+
+        if (getContentResolver().getType(uri) != null &&
+                Objects.requireNonNull(getContentResolver().getType(uri)).contains("audio")) {
+            // This is an audio file. Store access permission and load the file
+            loadAudioFile(uri);
+        } else {
+            // This is a project file
+            StringBuilder string = new StringBuilder();
+            try {
+                // Read file
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    string.append(line);
+                }
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                alertLoaderError(e.getLocalizedMessage());
+                return;
+            }
+
+            // Parse and load the choreography data
+            if (!parseJSON(string.toString()))
+                return;
+        }
+
+        // Update the display with the new choreo data
+        finalizeFileLoad(name);
     }
 
 
@@ -337,36 +432,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    /**
-     * Load a new input file.
-     * <p/>
-     * This file can either be a media file to load into the player,
-     * of a project file created with saveFile. <br/>
-     * If it is explicitly requested to load only an audio file, the current choreography
-     * data is not removed when loading the new file. Use clearChoreo() if necessary.
-     *
-     * @param mediaOnly if true, filter only for audio files
-     */
-    private void openFile(boolean mediaOnly) {
-        // Start file creation intent, actual file read is done in Activity callback
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        String[] types;
-        if (mediaOnly) {
-            types = new String[] {"audio/*"};
-        } else {
-            types = new String[] {"audio/*", "application/json"};
-        }
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, types);
-
-        if (!mediaOnly) {
-            clearChoreo();
-            startActivityForResult(intent, PICK_PROJECT_FILE);
-        } else {
-            startActivityForResult(intent, PICK_AUDIO_FILE);
-        }
-    }
 
 
     /**
@@ -636,6 +701,76 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Ask for confirmation before deleting a file.
+     * <p/>
+     * If the confirmation is positive, this function will delete the specified file.
+     *
+     * @param filename Name of the file to be deleted
+     */
+    private void warnDelete(String filename) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Warnung");
+        builder.setMessage(filename + " löschen? Dies kann nicht rückgängig gemacht werden.");
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteFile(internalFilePrefix + filename);
+                updateFileList();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        // Create the AlertDialog object and return it.
+        builder.show();
+    }
+
+
+    /**
+     * Ask for confirmation before overwriting a file.
+     * <p/>
+     * If response is positive, overwrites the file.
+     * If it is negative, cancels the file loading.
+     * If rename is chosen, asks for a string, and tries to load the file
+     * with the new name, repeating the process if necessary.
+     *
+     * @param uri URI of the loaded file.
+     * @param filename Name of the file to be overwritten
+     */
+    private void warnOverwrite(Uri uri, String filename) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Warnung");
+        builder.setMessage(filename + " überschreiben? Dies kann nicht rückgängig gemacht werden.");
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                loadProjectFile(uri, filename, true);
+            }
+        });
+        builder.setNeutralButton(R.string.rename, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Utils.pickString(LayoutInflater.from(MainActivity.this), filename, new StringPickerTargetInterface() {
+                    @Override
+                    public void setString(String string) {
+                        loadProjectFile(uri, string, false);
+                    }
+                });
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        // Create the AlertDialog object and return it.
+        builder.show();
+    }
+
+
     @Override
     public void rename(String targetFile, String newName) {
 
@@ -660,7 +795,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void delete(String targetFile) {
-        deleteFile(internalFilePrefix + targetFile);
+        warnDelete(targetFile);
     }
 
 
@@ -689,8 +824,10 @@ public class MainActivity extends AppCompatActivity
 
         super.onActivityResult(requestCode, resultCode, resultData);
 
+        if (resultCode != Activity.RESULT_OK) return;
+
         // Open File: file chooser returned an URI
-        if (requestCode == PICK_PROJECT_FILE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == PICK_AUDIO_FILE || requestCode == PICK_PROJECT_FILE) {
             Uri uri = null;
             if (resultData == null)
                 return;
@@ -699,64 +836,21 @@ public class MainActivity extends AppCompatActivity
             if (uri == null || uri.getPath() == null)
                 return;
 
-            if (getContentResolver().getType(uri) != null &&
-                    Objects.requireNonNull(getContentResolver().getType(uri)).contains("audio")) {
-                // This is an audio file. Store access permission and load the file
-                getApplicationContext().getContentResolver().takePersistableUriPermission(uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                if (!mainFragment.player.loadFile(uri)) {
-                    // Request loading new audio file
-                    alertLoaderError(getResources().getString(R.string.mediaError));
-                    return;
-                }
+            if (requestCode == PICK_PROJECT_FILE) {
+                // Replacing the whole project, update filename display
+                String[] path = uri.getPath().split("/");
+                String name = path[path.length - 1].split("\\.")[0];
+
+                // load internally calls finalizeFileLoad after all possible
+                // user interactions are done.
+                loadProjectFile(uri, name, false);
             } else {
-                // This is a project file
-                StringBuilder string = new StringBuilder();
-                try {
-                    // Read file
-                    InputStream inputStream = getContentResolver().openInputStream(uri);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        string.append(line);
-                    }
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    alertLoaderError(e.getLocalizedMessage());
-                    return;
-                }
-
-                if (!parseJSON(string.toString()))
-                    return;
+                loadAudioFile(uri);
+                finalizeFileLoad(null);
             }
 
-            String[] path = uri.getPath().split("/");
-            String name = path[path.length - 1].split("\\.")[0];
-            finalizeFileLoad(name);
-
-        } else if (requestCode == PICK_AUDIO_FILE && resultCode == Activity.RESULT_OK) {
-            Uri uri = null;
-            if (resultData == null)
-                return;
-
-            uri = resultData.getData();
-            if (uri == null || uri.getPath() == null)
-                return;
-
-            if (getContentResolver().getType(uri) != null) {
-                // Store access permission and load the file
-                getApplicationContext().getContentResolver().takePersistableUriPermission(uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                if (!mainFragment.player.loadFile(uri)) {
-                    // Request loading new audio file
-                    alertLoaderError(getResources().getString(R.string.mediaError));
-                    return;
-                }
-            }
-            finalizeFileLoad(null);
         // Save File: File creation dialog returned an URI
-        } else if (requestCode == PICK_SAVE_FILE && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == PICK_SAVE_FILE) {
 
             if (resultData == null)
                 return;

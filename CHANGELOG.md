@@ -1,7 +1,18 @@
 # Versionsverlauf #
 
 
-## **[1.02.07]** - 25.01.2026
+## **[1.03.01]** - 07.02.2026 ##
+
+In-App Speicher.
+
+- Automatisches Speichern von Choreographien im internen Speicher
+- Laden, Umbenennen und Löschen dieser Dateien über die Menüleiste
+- Nutzerbestätigung vor Aktionen mit möglichem Datenverlust
+- Markierungen nach Zeit sortiert
+- Verschiedene Fehlerbehebungen
+
+
+## **[1.02.07]** - 25.01.2026 ##
 
 Erstes öffentliches Release auf GitHub.
 

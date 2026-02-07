@@ -29,7 +29,7 @@ Für die Freigabe im Google Play Store werden noch Tester gesucht. Wenn Du dazu 
 ## Verwendung ##
 
 Eine Übersicht der Oberläche mit Erklärungen zu den einzelnen Funktionen findet sich in der 
-beiliegenden [Bedienungsanleitung](file://app/src/main/assets/manual.index), welche auch über die App abrufbar ist.
+beiliegenden [Bedienungsanleitung](https://html-preview.github.io/?url=https://github.com/streubelm/ChoreoLooper/blob/main/app/src/main/assets/manual.html), welche auch über die App abrufbar ist.
 
 
 ## Unterstützen ##

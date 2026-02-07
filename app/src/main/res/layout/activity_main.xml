@@ -104,7 +104,7 @@
                         android:layout_height="50dp"
                         android:scaleType="fitCenter"
                         android:layout_marginHorizontal="12dp"
-                        android:src="@drawable/play" />
+                        android:src="@drawable/home" />
 
                     <TextView
                         android:layout_width="match_parent"

@@ -1,9 +1,8 @@
 package com.github.choreolooper;
 
 /*
-TODO In-App Speicher
-TODO Ton- und Blinksignale bei Marken
 TODO sleep inhibit einstellbar
+TODO Ton- und Blinksignale bei Marken
 TODO Farben / Tags für Sequenzen und Marken
 TODO Marken nach Tag filtern
  */
@@ -276,6 +275,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("application/json");
+        intent.putExtra(Intent.EXTRA_TITLE, currentFile.getText());
 
         startActivityForResult(intent, PICK_SAVE_FILE);
     }
@@ -432,8 +432,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     /**
      * Export the current choreography data as a JSON string.
      * <p/>
@@ -583,9 +581,9 @@ public class MainActivity extends AppCompatActivity
             if (!file.isFile() || !file.getName().startsWith(internalFilePrefix))
                 continue;
             internalFiles.add(file.getName().substring(internalFilePrefix.length()));
-            navFilesAdapter.notifyDataSetChanged();
             count ++;
         }
+        navFilesAdapter.notifyDataSetChanged();
         Log.w("ChoreoLooper", "added" + count + "menu items");
     }
 
@@ -716,6 +714,13 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int id) {
                 deleteFile(internalFilePrefix + filename);
                 updateFileList();
+
+                if (filename.equals(currentFile.getText().toString())) {
+                    // unload file we just deleted
+                    clearChoreo();
+                    mainFragment.player.loadFile(null);
+                    finalizeFileLoad(getString(R.string.stateUninit));
+                }
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -771,6 +776,14 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Rename an internal save file.
+     * <p/>
+     * Caution: Will overwrite other save files without warning.
+     *
+     * @param targetFile Current name of the file to be renamed.
+     * @param newName New name to use for the file.
+     */
     @Override
     public void rename(String targetFile, String newName) {
 
@@ -793,17 +806,32 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Delete an internal save file.
+     * <p/>
+     * Will ask for user confirmation before deleting.
+     *
+     * @param targetFile Name of the file to be deleted.
+     */
     @Override
     public void delete(String targetFile) {
         warnDelete(targetFile);
     }
 
 
+    /**
+     * Load a file from internal storage.
+     * <p/>
+     * This will replace the current content of the UI.
+     *
+     * @param targetFile Name of the file to load.
+     */
     @Override
     public void open(String targetFile) {
         readInternal(targetFile);
         showFragment(mainFragment);
     }
+
 
     /**
      * Called by android when an Activity returns.

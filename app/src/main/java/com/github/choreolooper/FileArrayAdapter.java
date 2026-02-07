@@ -15,13 +15,27 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter used for the list of available choreography files in internal storage.
+ */
 public class FileArrayAdapter extends ArrayAdapter<String> {
 
+    /// Entity managing operations on the files on this list.
     FileActionInterface actionInterface;
 
-    private Context context;
-    private List<String> files;
+    /// Application context used for rendering
+    private final Context context;
+    /// Names of the listed files
+    private final List<String> files;
 
+
+    /**
+     * Create a new FileArrayAdapter for a list of filenames.
+     *
+     * @param context Application context used for drawing.
+     * @param fileNames List used as the source of available filenames.
+     * @param actionInterface Interface to use for triggering actions on the contained files.
+     */
     public FileArrayAdapter(@NonNull Context context, @NonNull List<String> fileNames, FileActionInterface actionInterface) {
         super(context, -1, fileNames);
 
@@ -31,6 +45,26 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
         this.files = fileNames;
     }
 
+
+    /**
+     * Overwritten method returning a custom View for display.
+     * <p/>
+     * This View object contains the complete list of files, each
+     * including the file name, rename, and delete buttons with their
+     * associated action callbacks.
+     *
+     * @param position The position of the item within the adapter's data set of the item whose view
+     *        we want.
+     * @param convertView The old view to reuse, if possible. Note: You should check that this view
+     *        is non-null and of an appropriate type before using. If it is not possible to convert
+     *        this view to display the correct data, this method can create a new view.
+     *        Heterogeneous lists can specify their number of view types, so that this View is
+     *        always of the right type (see {@link #getViewTypeCount()} and
+     *        {@link #getItemViewType(int)}).
+     * @param parent The parent that this view will eventually be attached to
+     *
+     * @return A View object containing the file list and action buttons.
+     */
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);

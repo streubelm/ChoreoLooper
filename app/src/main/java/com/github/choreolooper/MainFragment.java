@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Fragment containing the main app functionality.
@@ -279,12 +281,10 @@ public class MainFragment extends Fragment
                 selectMark(newMark);
 
                 markList.add(newMark);
-                markAdapter.notifyDataSetChanged();
-                markSpinner.setSelection(markList.size() - 1);
-
                 player.addMark(newMark);
-                editListener.notifyChange();
+                currentMark = newMark;
 
+                notifyMarkEdit();
                 showMarkFragment();
             }
         });
@@ -502,7 +502,9 @@ public class MainFragment extends Fragment
      */
     @Override
     public void notifyMarkEdit() {
+        Collections.sort(markList, (Mark a, Mark b) -> (a.time - b.time));
         markAdapter.notifyDataSetChanged();
+        markSpinner.setSelection(markList.indexOf(currentMark));
         editListener.notifyChange();
     }
 

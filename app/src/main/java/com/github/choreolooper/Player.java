@@ -299,6 +299,21 @@ public class Player {
     public boolean loadFile(Uri uri) {
         setSequence(false);
 
+        if (uri == null) {
+            // explicit unload
+            state = PlayerState.UNINITIALIZED;
+            player.reset();
+
+            this.uri = null;
+
+            seeker.setMax(0);
+            timeDisplay.setText(Utils.formatTime(0));
+            durationDisplay.setText(Utils.formatTime(0));
+
+            playBtn.setImageResource(R.drawable.play);
+            return true;
+        }
+
         // Try to load file in new player, so the old one still exists on failure
         MediaPlayer tmp = new MediaPlayer();
         try {

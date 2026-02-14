@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,8 +19,7 @@ import androidx.fragment.app.Fragment;
 /**
  * Center area fragment containing the quick mark controls.
  */
-public class SceneFragment extends Fragment
-        implements ParentFragmentInterface, SceneEditListener {
+public class SceneFragment extends Fragment {
 
 
     /// Media player interface
@@ -30,6 +30,12 @@ public class SceneFragment extends Fragment
 
     EditText sceneName;
     EditText sceneNotes;
+
+    Button begin;
+    Button end;
+    Button pre;
+    Button inter;
+    Button reps;
 
     Scene currentScene;
 
@@ -94,6 +100,7 @@ public class SceneFragment extends Fragment
             @Override
             public void onClick(View v) {
                 currentScene.begin = player.getProgress();
+                begin.setText(Utils.formatTime(currentScene.begin));
                 afterSceneEdited();
             }
         });
@@ -104,17 +111,8 @@ public class SceneFragment extends Fragment
             @Override
             public void onClick(View v) {
                 currentScene.end = player.getProgress();
+                end.setText(Utils.formatTime(currentScene.end));
                 afterSceneEdited();
-            }
-        });
-
-        // Details button
-        ImageButton editScene = view.findViewById(R.id.sceneInnerEdit);
-        editScene.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                assert getParentFragment() != null;
-                ((MainFragment)getParentFragment()).showEditSceneFragment();
             }
         });
 
@@ -147,6 +145,86 @@ public class SceneFragment extends Fragment
             }
         });
 
+        // Input field for the media fragment begin
+        begin = view.findViewById(R.id.startTime);
+        begin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.pickTime(getLayoutInflater(),
+                        currentScene.begin, 0, currentScene.end,
+                        (int millis) -> {
+                            currentScene.begin = millis;
+                            begin.setText(Utils.formatTime(millis));
+                            afterSceneEdited();
+                        }
+                );
+            }
+        });
+
+        // Input field for the media fragment end
+        end = view.findViewById(R.id.endTime);
+        end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.pickTime(getLayoutInflater(),
+                        currentScene.end, currentScene.begin, player.getDuration(),
+                        (int millis) -> {
+                            currentScene.end = millis;
+                            end.setText(Utils.formatTime(millis));
+                            afterSceneEdited();
+                        }
+                );
+            }
+        });
+
+        // Input field for the pre-sequence delay
+        pre = view.findViewById(R.id.prePause);
+        pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.pickTime(getLayoutInflater(),
+                        currentScene.pre, 0, Utils.getMilliseconds(0, 20),
+                        (int millis) -> {
+                            currentScene.pre = millis;
+                            pre.setText(Utils.formatTime(millis));
+                            afterSceneEdited();
+                        }
+                );
+            }
+        });
+
+        // Input field for the inter-repetition delay
+        inter = view.findViewById(R.id.interPause);
+        inter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.pickTime(getLayoutInflater(),
+                        currentScene.inter, 0, Utils.getMilliseconds(1, 0),
+                        (int millis) -> {
+                            currentScene.inter = millis;
+                            inter.setText(Utils.formatTime(millis));
+                            afterSceneEdited();
+                        }
+                );
+            }
+        });
+
+        // Input field for the number of repetitions in the sequence
+        reps = view.findViewById(R.id.reps);
+        reps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.pickNumber(getLayoutInflater(),
+                        currentScene.reps, 0, 20,
+                        (int n) -> {
+                            currentScene.reps = n;
+                            reps.setText(String.valueOf(n));
+                            afterSceneEdited();
+                        }
+                );
+            }
+        });
+
         // notes field
         sceneNotes = view.findViewById(R.id.editSceneNotes);
         sceneNotes.addTextChangedListener(new TextWatcher() {
@@ -172,7 +250,7 @@ public class SceneFragment extends Fragment
 
 
     /**
-     * Set the listener for mark edits made by this fragment
+     * Set the listener for scene edits made by this fragment
      *
      * @param listener target listening for edit notifications
      */
@@ -190,6 +268,12 @@ public class SceneFragment extends Fragment
         currentScene = scene;
         Utils.setEditText(sceneName, scene.name);
         Utils.setEditText(sceneNotes, scene.notes);
+
+        begin.setText(Utils.formatTime(scene.begin));
+        end.setText(Utils.formatTime(scene.end));
+        pre.setText(Utils.formatTime(scene.pre));
+        inter.setText(Utils.formatTime(scene.inter));
+        reps.setText(String.valueOf(scene.reps));
     }
 
 
@@ -208,26 +292,5 @@ public class SceneFragment extends Fragment
         currentScene.isAuto = false;
 
         editListener.notifySceneEdit();
-    }
-
-
-    /**
-     * Listener target for any external edits to the current scene.
-     */
-    @Override
-    public void notifySceneEdit() {
-        afterSceneEdited();
-    }
-
-
-    /**
-     * Interface function requesting to display this fragment instead of the
-     * current one.
-     */
-    @Override
-    public void leaveSubFragment() {
-        MainFragment mainFragment = (MainFragment)getParentFragment();
-        assert (mainFragment != null);
-        mainFragment.showSceneFragment();
     }
 }

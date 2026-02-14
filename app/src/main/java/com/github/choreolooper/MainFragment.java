@@ -19,7 +19,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Fragment containing the main app functionality.
@@ -37,8 +36,6 @@ public class MainFragment extends Fragment
     SceneFragment sceneFragment;
     /// Fragment containing the quick mark controls
     MarkFragment markFragment;
-    /// Fragment containing the detailed scene controls
-    EditSceneFragment editSceneFragment;
 
     /// Change listener for persisting changes
     EditListener editListener;
@@ -127,9 +124,6 @@ public class MainFragment extends Fragment
         sceneFragment.player = player;
         sceneFragment.setEditListener(this);
 
-        editSceneFragment = EditSceneFragment.newInstance();
-        editSceneFragment.initialize(sceneFragment, sceneFragment, currentScene, player.getDuration());
-
         markFragment = MarkFragment.newInstance();
         markFragment.player = player;
         markFragment.setEditListener(this);
@@ -138,9 +132,7 @@ public class MainFragment extends Fragment
                 .setReorderingAllowed(true)
                 .add(R.id.main_inner_fragment, markFragment)
                 .add(R.id.main_inner_fragment, sceneFragment)
-                .add(R.id.main_inner_fragment, editSceneFragment)
                 .hide(markFragment)
-                .hide(editSceneFragment)
                 .commit();
         currentFragment = sceneFragment;
 
@@ -297,15 +289,15 @@ public class MainFragment extends Fragment
         markSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectMark((Mark) markSpinner.getItemAtPosition(position));
-                if (!deleteMarkBtn.isClickable()) {
-                    enableButton(deleteMarkBtn);
-                }
-                if (!editMarkBtn.isClickable()) {
-                    enableButton(editMarkBtn);
-                }
+                Mark newMark = (Mark) markSpinner.getItemAtPosition(position);
 
-                showMarkFragment();
+                enableButton(deleteMarkBtn);
+                enableButton(editMarkBtn);
+
+                if (!newMark.equals(currentMark)) {
+                    selectMark(newMark);
+                    showMarkFragment();
+                }
             }
 
             @Override
@@ -409,15 +401,6 @@ public class MainFragment extends Fragment
 
         editSceneBtn.setBackgroundResource(R.drawable.pressed);
         editMarkBtn.setBackgroundColor(Color.TRANSPARENT);
-    }
-
-    /**
-     * Display the detailed scene control fragment
-     */
-    public void showEditSceneFragment() {
-        editSceneFragment.setScene(currentScene);
-        editSceneFragment.setMediaDuration(player.getDuration());
-        showFragment(editSceneFragment);
     }
 
     /**

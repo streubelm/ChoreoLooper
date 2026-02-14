@@ -1,6 +1,14 @@
 # Versionsverlauf #
 
 
+## **[1.03.02]** - 14.02.2026 ##
+
+Vereinfachte Bedienung.
+
+- Zusammenführen aller Sequenzeigenschaften in eine einzelne Ansicht
+- Aktualisierte Bedienungsanleitung
+
+
 ## **[1.03.01]** - 07.02.2026 ##
 
 In-App Speicher.

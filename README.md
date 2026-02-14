@@ -41,7 +41,6 @@ Wenn Du bei der Entwicklung unterstützen willst, sei es mit Code, Übersetzunge
 
 ## Geplante Features ##
 
-* In-App Speicher für Küren
 * Nativer `MediaSessionService` zur Steuerung vom Sperrbildschirm aus
 * Optisches Signal bei Wiedergabe einer markierten Stelle
 * Nutzerdefinierte Farbmarkierungen / Tags für Sequenzen und Marken

@@ -266,6 +266,7 @@ public class SceneFragment extends Fragment {
      */
     public void setScene(Scene scene) {
         currentScene = scene;
+        sceneName.setHint(Utils.formatSpan(currentScene.begin, currentScene.end));
         Utils.setEditText(sceneName, scene.name);
         Utils.setEditText(sceneNotes, scene.notes);
 
@@ -290,6 +291,7 @@ public class SceneFragment extends Fragment {
             }
         }
         currentScene.isAuto = false;
+        sceneName.setHint(Utils.formatSpan(currentScene.begin, currentScene.end));
 
         editListener.notifySceneEdit();
     }

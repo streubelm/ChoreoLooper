@@ -32,9 +32,9 @@ public class Scene {
     boolean isAuto;
 
 
-    public Scene(String name, int begin, int end, int pre, int inter, int reps) {
+    public Scene(String name, String notes, int begin, int end, int pre, int inter, int reps) {
         this.name = name;
-        this.notes = "";
+        this.notes = notes;
         this.begin = begin;
         this.end = end;
         this.pre = pre;
@@ -46,7 +46,9 @@ public class Scene {
     @NonNull
     @Override
     public String toString() {
-        return name;
+        if (!name.isEmpty()) return name;
+
+        return Utils.formatSpan(begin, end);
     }
 
     @Override

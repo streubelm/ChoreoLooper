@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Utils {
 
@@ -25,6 +30,20 @@ public class Utils {
         int min = s / 60;
         int sec = s % 60;
         return formatTime(min, sec);
+    }
+
+
+    /**
+     * Format a time range given as start and ent time in milliseconds as a human-readable String
+     * in seconds. Hereby, the time values are rounded to the nearest full second.
+     *
+     * @param start start time in milliseconds
+     * @param end end time i milliseconds
+     *
+     * @return a String representation of the time span
+     */
+    public static String formatSpan(int start, int end) {
+        return formatTime(start) + " — " + formatTime(end);
     }
 
 
@@ -236,6 +255,89 @@ public class Utils {
         });
         AlertDialog alertDialog = d.create();
         alertDialog.show();
+    }
+
+
+    /**
+     * Allow the user to enter a string via an alert dialog,
+     * ensuring that the string is unique within a given list of strings.
+     *
+     * @param inflater LayoutInflater used to display the dialog
+     * @param current current string used as initial value
+     * @param world List of all already existing strings
+     * @param target callback function for receiving the result
+     */
+    public static void pickUniqueString(LayoutInflater inflater, String current, List<String> world,
+                                        StringPickerTargetInterface target) {
+
+        View dialogView = inflater.inflate(R.layout.string_picker_dialog, null);
+        AlertDialog.Builder d = new AlertDialog.Builder(dialogView.getContext());
+        d.setView(dialogView);
+
+        EditText picker = dialogView.findViewById(R.id.dialog_string_picker);
+        picker.setText(current);
+        picker.setSingleLine(true);
+
+        d.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String result = picker.getText().toString();
+                for (String s : world) {
+                    if (s.equals(result)) {
+                        // Duplicate, request other value
+                        warnOverwrite(inflater, result, world, target);
+                        return;
+                    }
+                }
+                // This is unique, return it
+                target.setString(result);
+            }
+        });
+        d.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        AlertDialog alertDialog = d.create();
+        alertDialog.show();
+    }
+
+
+    /**
+     * Show a dialog warning the user of a possible naming conflict,
+     * and allow them to choose a unique name to use instead.
+     *
+     * @param inflater LayoutInflater used to display the dialog
+     * @param current current string used as initial value
+     * @param world List of all already existing strings
+     *
+     * @param target callback function for receiving the String to use
+     */
+    public static void warnOverwrite(LayoutInflater inflater, String current, List<String> world,
+                                     StringPickerTargetInterface target) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(inflater.getContext());
+        builder.setTitle("Warnung");
+        builder.setMessage(current + " überschreiben? Dies kann nicht rückgängig gemacht werden.");
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                target.setString(current);
+            }
+        });
+        builder.setNeutralButton(R.string.rename, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                pickUniqueString(inflater, current, world, target);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        // Create the AlertDialog object and exit.
+        builder.show();
     }
 }
 

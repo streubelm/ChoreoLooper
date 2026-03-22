@@ -1,5 +1,18 @@
 # Versionsverlauf #
 
+## **[1.03.03]** - 22.03.2026 ##
+
+Verbesserte Nutzeroberfläche.
+
+- Neue Icons für Sequenz- und Markenaktionen
+- Datei Im- und Export in die Navigationsleiste verschoben
+- Kurzanleitung in der Titelleiste
+- Korrekte Anzeige von Dateinamen
+- Unterstützung von Unicode-Zeichen
+- Zeiten als Standardnamen für Sequenzen und Markierungen
+- Verbesserter Kontrast im Dark Mode
+- Verschiedene Fehlerbehebungen
+
 
 ## **[1.03.02]** - 14.02.2026 ##
 

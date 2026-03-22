@@ -1,15 +1,19 @@
 package com.github.choreolooper;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,6 +74,12 @@ public class Player {
     /// Timer starting the playback on complete
     private CountDownTimer pauseTimer;
 
+    /// Enable/Disale sequence mode
+    private final SwitchMaterial seqSwitch;
+
+    /// Contains all media control buttons
+    private final ViewGroup mediaControlBar;
+
     /// Switches the playback mode from normal to the sequence loop
     private boolean playSequence = false;
     /// Current number of repetitions within the current sequence loop
@@ -96,6 +106,21 @@ public class Player {
         player = new MediaPlayer();
         state = PlayerState.UNINITIALIZED;
 
+        // Sequence switch
+        seqSwitch = view.findViewById(R.id.modeSwitch);
+        seqSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (seqSwitch.isChecked()) {
+                    // Activate Sequence mode
+                    seqSwitch.setChecked(setSequence(true));
+                } else {
+                    // Stop the sequence in the player
+                    seqSwitch.setChecked(setSequence(false));
+                }
+            }
+        });
+
         // seekbar UI element
         seeker = view.findViewById(R.id.seekBar);
         seeker.setProgress(0);
@@ -110,7 +135,7 @@ public class Player {
                         if (Math.abs(progress - mark) <= 5000) {
                             seekTo(mark);
                             snapped = true;
-                            posControl.ext_selectMark(new Mark("", mark));
+                            posControl.ext_selectMark(new Mark("", "", mark));
                             break;
                         }
                     }
@@ -148,6 +173,8 @@ public class Player {
 
         // progress bar shown during pauses
         pauseProgress = view.findViewById(R.id.pauseProgress);
+
+        mediaControlBar = view.findViewById(R.id.controlPanel);
 
         // Play/Pause button
         playBtn = view.findViewById(R.id.playBtn);
@@ -203,7 +230,7 @@ public class Player {
                 if (toScene) {
                     posControl.ext_selectScene(currentScene);
                 } else if (toMark) {
-                    posControl.ext_selectMark(new Mark("", target));
+                    posControl.ext_selectMark(new Mark("", "", target));
                 }
 
                 seekTo(target);
@@ -235,7 +262,7 @@ public class Player {
                 if (toScene) {
                     posControl.ext_selectScene(currentScene);
                 } else if (toMark) {
-                    posControl.ext_selectMark(new Mark("", target));
+                    posControl.ext_selectMark(new Mark("", "", target));
                 }
 
                 seekTo(target);
@@ -298,6 +325,7 @@ public class Player {
      */
     public boolean loadFile(Uri uri) {
         setSequence(false);
+        seqSwitch.setChecked(false);
 
         if (uri == null) {
             // explicit unload
@@ -629,6 +657,19 @@ public class Player {
             state = PlayerState.STOPPED;
 
             sequenceDetails.setVisibility(View.VISIBLE);
+        }
+
+        int color;
+        TypedArray a;
+        if (playSequence) {
+            a = context.getTheme().obtainStyledAttributes(R.style.Theme_ChoreoLooper, new int[] {com.google.android.material.R.attr.colorSecondary});
+        } else {
+            a = context.getTheme().obtainStyledAttributes(R.style.Theme_ChoreoLooper, new int[] {com.google.android.material.R.attr.colorPrimary});
+        }
+        color = a.getColor(0,0);
+        a.recycle();
+        for (int i = 0; i < mediaControlBar.getChildCount(); i++) {
+            ((ImageButton) mediaControlBar.getChildAt(i)).setColorFilter(color);
         }
 
         return playSequence;

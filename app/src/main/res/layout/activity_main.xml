@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:keepScreenOn="true">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="?colorSecondary"
+        android:background="?colorSecondaryVariant"
         android:elevation="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,20 +18,6 @@
             android:elevation="12dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/openButton"
-                android:background="?attr/selectableItemBackground"
-                android:layout_height="match_parent"
-                android:layout_width="60dp"
-                android:layout_marginEnd="20dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/actionOpen"
-                android:padding="12dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/open"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/currentFile"
@@ -45,23 +29,24 @@
                 android:textSize="20sp"
                 android:textColor="?colorOnPrimary"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintBottom_toBottomOf="@id/openButton"
-                app:layout_constraintLeft_toRightOf="@id/openButton"
-                app:layout_constraintRight_toLeftOf="@id/saveButton"
-                app:layout_constraintTop_toTopOf="@id/openButton" />
+                app:layout_constraintTop_toTopOf="@id/helpButton"
+                app:layout_constraintBottom_toBottomOf="@id/helpButton"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/helpButton"/>
 
             <ImageButton
-                android:id="@+id/saveButton"
+                android:id="@+id/helpButton"
                 android:background="?attr/selectableItemBackground"
-                android:layout_width="55dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="20dp"
+                android:layout_width="45dp"
+                android:layout_marginStart="20dp"
                 android:adjustViewBounds="true"
-                android:contentDescription="@string/actionSave"
+                android:contentDescription="@string/reference"
                 android:padding="12dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/save"
-                app:layout_constraintRight_toRightOf="parent"
+                android:src="@drawable/help"
+                app:tint="?colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -80,114 +65,197 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationView"
-            android:layout_height="match_parent"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:id="@+id/nav_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:background="?android:selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="50dp"
-                        android:scaleType="fitCenter"
-                        android:layout_marginHorizontal="12dp"
-                        android:src="@drawable/home" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/home"
-                        android:background="?android:selectableItemBackground"
-                        style="@android:style/TextAppearance.Medium"/>
-                </LinearLayout>
-
+                android:background="?android:colorBackground">
 
                 <LinearLayout
-                    android:id="@+id/nav_manual"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:background="?android:selectableItemBackground">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/nav_footer"
+                    app:layout_constrainedHeight="true">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="50dp"
-                        android:scaleType="fitCenter"
-                        android:layout_marginHorizontal="12dp"
-                        android:src="@drawable/help" />
+                    <LinearLayout
+                        android:id="@+id/nav_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home" />
+
+                        <TextView
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:text="@string/home" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/nav_manual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/help" />
+
+                        <TextView
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:text="@string/manual" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/nav_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/logo_fg" />
+
+                        <TextView
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:text="@string/about" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/nav_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/settings" />
+
+                        <TextView
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:text="@string/settings" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="12dp"
+                        android:background="?attr/colorOnSecondary" />
 
                     <TextView
+                        style="@android:style/TextAppearance.Medium"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/manual"
-                        android:background="?android:selectableItemBackground"
-                        style="@android:style/TextAppearance.Medium" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/nav_about"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:background="?android:selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="50dp"
-                        android:scaleType="fitCenter"
+                        android:layout_height="wrap_content"
                         android:layout_marginHorizontal="12dp"
-                        android:src="@drawable/logo_fg" />
+                        android:text="@string/files"
+                        android:textColor="?android:attr/textColorSecondary" />
 
-                    <TextView
+                    <ListView
+                        android:id="@+id/nav_list_view"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/about"
-                        android:background="?android:selectableItemBackground"
-                        style="@android:style/TextAppearance.Medium" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="12dp"
-                    android:background="?attr/colorOnSecondary"/>
+                    android:layout_height="12dp"
+                    android:elevation="6dp"
+                    android:background="?shadowTop"
+                    app:layout_constraintBottom_toTopOf="@id/nav_footer"/>
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/nav_footer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="12dp"
-                    android:text="@string/files"
-                    style="@android:style/TextAppearance.Medium"
-                    android:textColor="?android:attr/textColorSecondary"/>
+                    android:layout_height="60dp"
+                    android:elevation="6dp"
+                    android:background="?colorSecondaryVariant"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                <ListView
-                    android:id="@+id/nav_list_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    <ImageButton
+                        android:id="@+id/openButton"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="20dp"
+                        android:adjustViewBounds="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:contentDescription="@string/actionOpen"
+                        android:padding="12dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/open"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/saveButton"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/saveButton"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="20dp"
+                        android:adjustViewBounds="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:contentDescription="@string/actionSave"
+                        android:padding="12dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/share"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/openButton" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.navigation.NavigationView>
 

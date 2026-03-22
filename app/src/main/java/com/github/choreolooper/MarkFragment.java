@@ -189,6 +189,7 @@ public class MarkFragment extends Fragment {
      */
     public void setMark(Mark mark) {
         currentMark = mark;
+        markName.setHint(Utils.formatTime(mark.time));
         Utils.setEditText(markName, mark.name);
         Utils.setEditText(markNotes, mark.notes);
         markTime.setText(Utils.formatTime(mark.time));
@@ -200,6 +201,7 @@ public class MarkFragment extends Fragment {
      */
     private void afterMarkEdited() {
         markTime.setText(Utils.formatTime(currentMark.time));
+        markName.setHint(Utils.formatTime(currentMark.time));
         editListener.notifyMarkEdit();
     }
 }

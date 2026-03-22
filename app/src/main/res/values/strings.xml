@@ -36,7 +36,7 @@
     <string name="fullScene">Ganzes Lied</string>
     <string name="delete">Entfernen</string>
     <string name="loaderError">Audio konnte nicht geladen werden.</string>
-    <string name="setMark">Marke setzen</string>
+    <string name="setMark">Position setzen</string>
     <string name="edit_scene_title">Bearbeiten</string>
     <string name="notes">Notizen</string>
     <string name="name">Name</string>
@@ -49,11 +49,23 @@
     <string name="autoMarker">" [auto]"</string>
     <string name="seqBasename">"Sequenz "</string>
     <string name="markBasename">"Marke "</string>
-    <string name="about">Über ChoreLooper</string>
+    <string name="about">Über ChoreoLooper</string>
     <string name="manual">Benutzung</string>
     <string name="home">Start</string>
     <string name="files">Dateien</string>
     <string name="back">Zurück</string>
     <string name="time_sep" translatable="false">:</string>
     <string name="rename">Umbenennen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="sleep_inhibit">Bildschimsperre Verhindern</string>
+    <string name="reference">Kurzanleitung</string>
+    <string name="sequences">Sequenzen:</string>
+    <string name="show_props">Eigenschaften anzeigen</string>
+    <string name="create_new">Neu erstellen</string>
+    <string name="marks">Markierungen:</string>
+    <string name="editing">Bearbeitung:</string>
+    <string name="files_ref">Dateien (in der Seitenleiste):</string>
+    <string name="show_menu">Seitenleiste anzeigen</string>
+    <string name="import_new">Neu importieren</string>
+    <string name="export">Aktuelle exportieren</string>
 </resources>

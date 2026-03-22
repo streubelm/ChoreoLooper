@@ -11,9 +11,9 @@
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color (dimmed). -->
-        <!-- title bar, time picker buttons -->
+        <!-- button accent color -->
         <item name="colorSecondary">@color/blue</item>
-        <!-- unused -->
+        <!-- time picker buttons -->
         <item name="colorSecondaryVariant">@color/blue</item>
         <!-- text field borders -->
         <item name="colorOnSecondary">@color/dark_white</item>

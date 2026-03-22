@@ -16,16 +16,18 @@ public class Mark {
     int time;
 
 
-    public Mark(String name, int time) {
+    public Mark(String name, String notes, int time) {
         this.name = name;
+        this.notes = notes;
         this.time = time;
-        this.notes = "";
     }
 
     @NonNull
     @Override
     public String toString() {
-        return name;
+        if (!name.isEmpty()) return name;
+
+        return Utils.formatTime(time);
     }
 
     @Override

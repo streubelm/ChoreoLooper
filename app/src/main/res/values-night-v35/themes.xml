@@ -11,15 +11,15 @@
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color (dimmed). -->
+        <!-- button accent color -->
+        <item name="colorSecondary">@color/bg_blue</item>
         <!-- time picker buttons -->
-        <item name="colorSecondary">@color/dark_blue</item>
-        <!-- unused -->
         <item name="colorSecondaryVariant">@color/dark_blue</item>
         <!-- text field borders -->
         <item name="colorOnSecondary">@color/light_black</item>
 
         <!-- Accent color for seekbar slider -->
-        <item name="colorAccent">@color/dark_blue</item>
+        <item name="colorAccent">@color/bg_blue</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/dark_blue</item>

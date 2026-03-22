@@ -1,7 +1,6 @@
 package com.github.choreolooper;
 
 import android.content.Context;
-import android.media.Image;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +25,9 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
     private final Context context;
     /// Names of the listed files
     private final List<String> files;
+
+    /// Name of the currently loaded file
+    private String activeItem;
 
 
     /**
@@ -43,6 +44,7 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
 
         this.context = context;
         this.files = fileNames;
+        activeItem = "";
     }
 
 
@@ -77,9 +79,14 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
         name.setSelected(true);
         name.setSingleLine(true);
 
+        if (files.get(position).equals(activeItem)) {
+            itemView.setBackgroundResource(R.drawable.pressed);
+        }
+
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                activeItem = files.get(position);
                 actionInterface.open(files.get(position));
             }
         });
@@ -88,12 +95,10 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
         rename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.pickString(inflater, files.get(position), new StringPickerTargetInterface() {
+                Utils.pickUniqueString(inflater, files.get(position), files, new StringPickerTargetInterface() {
                     @Override
                     public void setString(String string) {
                         actionInterface.rename(files.get(position), string);
-                        files.set(position, string);
-                        notifyDataSetChanged();
                     }
                 });
             }
@@ -108,5 +113,9 @@ public class FileArrayAdapter extends ArrayAdapter<String> {
         });
 
         return itemView;
+    }
+
+    public void setActiveItem(String item) {
+        activeItem = item;
     }
 }

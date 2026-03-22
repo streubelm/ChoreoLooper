@@ -1,10 +1,14 @@
 package com.github.choreolooper;
 
 /*
-TODO sleep inhibit einstellbar
+TODO Don't crash on color scheme change
+TODO Confirm before deleting scenes/marks
+TODO MediaSession
+TODO MediaControl notification
 TODO Ton- und Blinksignale bei Marken
 TODO Farben / Tags für Sequenzen und Marken
 TODO Marken nach Tag filtern
+TODO Store / sort by file history
  */
 
 
@@ -15,9 +19,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -48,6 +51,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,6 +93,9 @@ public class MainActivity extends AppCompatActivity
     /// Fragment containing the user manual and about pages
     HTMLFragment htmlFragment;
 
+    /// Fragment containing usersettings
+    SettingsFragment settingsFragment;
+
     /// Currently shown fragment
     Fragment currentFragment;
 
@@ -113,11 +120,15 @@ public class MainActivity extends AppCompatActivity
 
         htmlFragment = HTMLFragment.newInstance();
 
+        settingsFragment = SettingsFragment.newInstance();
+
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.mainContainer, mainFragment)
                 .add(R.id.mainContainer, htmlFragment)
+                .add(R.id.mainContainer, settingsFragment)
                 .hide(htmlFragment)
+                .hide(settingsFragment)
                 .commit();
 
         currentFragment = mainFragment;
@@ -127,6 +138,26 @@ public class MainActivity extends AppCompatActivity
         currentFile.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         currentFile.setSelected(true);
         currentFile.setSingleLine(true);
+
+        // Display quick guide
+        ImageButton helpButton = findViewById(R.id.helpButton);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View dialogView = getLayoutInflater().inflate(R.layout.reference_dialog, null);
+                AlertDialog.Builder d = new AlertDialog.Builder(dialogView.getContext());
+                d.setView(dialogView);
+
+                d.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                d.create();
+                d.show();
+            }
+        });
 
 
         /*
@@ -168,6 +199,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        View settingsMenu = findViewById(R.id.nav_settings);
+        settingsMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(settingsFragment);
+            }
+        });
+
 
         // list of internal save files
         internalFiles = new ArrayList<>();
@@ -187,6 +226,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 saveInternal();
                 openFile(false);
+                showFragment(mainFragment);
             }
         });
 
@@ -197,6 +237,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 saveInternal();
                 saveFile();
+                showFragment(mainFragment);
             }
         });
 
@@ -361,9 +402,12 @@ public class MainActivity extends AppCompatActivity
     private void loadProjectFile(Uri uri, String name, boolean forceOverwrite) {
 
         if (internalFiles.contains(name) && !forceOverwrite) {
-            // If file exists, display a warning.
-            // The dialog will call this function again with updated parameters.
-            warnOverwrite(uri, name);
+            Utils.warnOverwrite(getLayoutInflater(), name, internalFiles, new StringPickerTargetInterface() {
+                @Override
+                public void setString(String string) {
+                    loadProjectFile(uri, string, true);
+                }
+            });
             return;
         }
 
@@ -380,7 +424,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 // Read file
                 InputStream inputStream = getContentResolver().openInputStream(uri);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     string.append(line);
@@ -413,7 +457,7 @@ public class MainActivity extends AppCompatActivity
 
         if (mainFragment.sceneList.isEmpty()) {
             mainFragment.sceneList.add(
-                    new Scene(getString(R.string.fullScene) + getString(R.string.autoMarker),
+                    new Scene(getString(R.string.fullScene) + getString(R.string.autoMarker), "",
                             0, mainFragment.player.getDuration(), 5000, 5000, 0)
             );
             mainFragment.sceneList.get(0).isAuto = true;
@@ -518,11 +562,12 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < marks.length(); i++) {
                 JSONObject elem = marks.getJSONObject(i);
                 Mark mark = new Mark(elem.getString("name"),
+                        elem.getString("notes"),
                         elem.getInt("time"));
-                mark.notes = elem.getString("notes");
                 mainFragment.markList.add(mark);
                 mainFragment.player.addMark(mark);
             }
+            Collections.sort(mainFragment.markList, (Mark a, Mark b) -> (a.time - b.time));
 
             mainFragment.markAdapter.notifyDataSetChanged();
 
@@ -533,12 +578,12 @@ public class MainActivity extends AppCompatActivity
                 JSONObject elem = scenes.getJSONObject(i);
                 Scene scene = new Scene(
                         elem.getString("name"),
+                        elem.getString("notes"),
                         elem.getInt("begin"),
                         elem.getInt("end"),
                         elem.getInt("pre"),
                         elem.getInt("inter"),
                         elem.getInt("reps"));
-                scene.notes = elem.getString("notes");
                 mainFragment.sceneList.add(scene);
             }
 
@@ -576,15 +621,13 @@ public class MainActivity extends AppCompatActivity
 
         File[] allFiles = getApplicationContext().getFilesDir().listFiles();
         assert (allFiles != null);
-        int count = 0;
         for (File file : allFiles) {
             if (!file.isFile() || !file.getName().startsWith(internalFilePrefix))
                 continue;
             internalFiles.add(file.getName().substring(internalFilePrefix.length()));
-            count ++;
         }
+        navFilesAdapter.setActiveItem(currentFile.getText().toString());
         navFilesAdapter.notifyDataSetChanged();
-        Log.w("ChoreoLooper", "added" + count + "menu items");
     }
 
 
@@ -603,7 +646,10 @@ public class MainActivity extends AppCompatActivity
         try (FileOutputStream file = openFileOutput(
                 internalFilePrefix + currentFile.getText().toString(),
                 Context.MODE_PRIVATE)) {
-            file.write(json.getBytes(StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(file, StandardCharsets.UTF_8));
+            writer.write(json);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -619,11 +665,13 @@ public class MainActivity extends AppCompatActivity
     private void readInternal(String name) {
         String json = "";
         try (FileInputStream file = openFileInput(internalFilePrefix + name)) {
-            int a;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(file, StandardCharsets.UTF_8));
+            String line;
             StringBuilder tmp = new StringBuilder();
-            while ((a = file.read()) != -1) {
-                tmp.append((char) a);
+            while ((line = reader.readLine()) != null) {
+                tmp.append(line);
             }
+            reader.close();
             json = tmp.toString();
         } catch (IOException e) {
             e.printStackTrace();
@@ -735,48 +783,6 @@ public class MainActivity extends AppCompatActivity
 
 
     /**
-     * Ask for confirmation before overwriting a file.
-     * <p/>
-     * If response is positive, overwrites the file.
-     * If it is negative, cancels the file loading.
-     * If rename is chosen, asks for a string, and tries to load the file
-     * with the new name, repeating the process if necessary.
-     *
-     * @param uri URI of the loaded file.
-     * @param filename Name of the file to be overwritten
-     */
-    private void warnOverwrite(Uri uri, String filename) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Warnung");
-        builder.setMessage(filename + " überschreiben? Dies kann nicht rückgängig gemacht werden.");
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                loadProjectFile(uri, filename, true);
-            }
-        });
-        builder.setNeutralButton(R.string.rename, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Utils.pickString(LayoutInflater.from(MainActivity.this), filename, new StringPickerTargetInterface() {
-                    @Override
-                    public void setString(String string) {
-                        loadProjectFile(uri, string, false);
-                    }
-                });
-            }
-        });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        // Create the AlertDialog object and return it.
-        builder.show();
-    }
-
-
-    /**
      * Rename an internal save file.
      * <p/>
      * Caution: Will overwrite other save files without warning.
@@ -789,20 +795,25 @@ public class MainActivity extends AppCompatActivity
 
         try (InputStream in = openFileInput(internalFilePrefix + targetFile)) {
             try (OutputStream out = openFileOutput(internalFilePrefix + newName, Context.MODE_PRIVATE)) {
-                int a;
-                while ((a = in.read()) != -1) {
-                    out.write((char) a);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
                 }
+                reader.close();
+                writer.write(builder.toString());
+                writer.flush();
+                writer.close();
             }
         } catch (IOException e) {
             return;
         }
 
         deleteFile(internalFilePrefix + targetFile);
-
-        if (currentFile.getText().toString().equals(targetFile)) {
-            currentFile.setText(newName);
-        }
+        updateFileList();
     }
 
 
@@ -866,9 +877,22 @@ public class MainActivity extends AppCompatActivity
 
             if (requestCode == PICK_PROJECT_FILE) {
                 // Replacing the whole project, update filename display
-                String[] path = uri.getPath().split("/");
-                String name = path[path.length - 1].split("\\.")[0];
+                String name;
+                if (uri.getScheme().equals("content")) {
+                    try (android.database.Cursor cursor = getContentResolver().query(uri, null,
+                            null, null, null)) {
 
+                        if (cursor == null) return;
+                        cursor.moveToFirst();
+                        int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+
+                        if (index < 0) return;
+                        name = cursor.getString(index);
+                    }
+                } else {
+                    String[] path = uri.getPath().split("/");
+                    name = path[path.length - 1].split("\\.")[0];
+                }
                 // load internally calls finalizeFileLoad after all possible
                 // user interactions are done.
                 loadProjectFile(uri, name, false);
@@ -894,7 +918,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 // open file and write json
                 OutputStream outputStream = getContentResolver().openOutputStream(uri);
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 writer.write(content);
                 writer.flush();
                 writer.close();

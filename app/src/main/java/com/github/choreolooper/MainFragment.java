@@ -8,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -160,7 +157,7 @@ public class MainFragment extends Fragment
                 sceneList.remove(sceneSpinner.getSelectedItemPosition());
 
                 if (sceneList.isEmpty()) {
-                    sceneList.add(new Scene(getString(R.string.fullScene) + getString(R.string.autoMarker), 0, player.getDuration(), 5000, 5000, 0));
+                    sceneList.add(new Scene(getString(R.string.fullScene) + getString(R.string.autoMarker), "", 0, player.getDuration(), 5000, 5000, 0));
                     sceneList.get(0).isAuto = true;
                 }
 
@@ -175,7 +172,7 @@ public class MainFragment extends Fragment
         addSceneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Scene newScene = new Scene(getString(R.string.seqBasename) + (sceneList.size()+1),
+                Scene newScene = new Scene("", "",
                         player.getProgress(), player.getDuration(),
                         5000, 5000, 0);
                 sceneList.add(newScene);
@@ -189,7 +186,7 @@ public class MainFragment extends Fragment
 
         // Scene spinner
         sceneList = new ArrayList<>();
-        sceneList.add(new Scene(getString(R.string.fullScene) + getString(R.string.autoMarker), 0, 0, 5000, 5000, 0));
+        sceneList.add(new Scene(getString(R.string.fullScene) + getString(R.string.autoMarker), "", 0, 0, 5000, 5000, 0));
         sceneList.get(0).isAuto = true;
         sceneAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, sceneList);
         sceneSpinner = view.findViewById(R.id.sceneSpinner);
@@ -269,7 +266,7 @@ public class MainFragment extends Fragment
         addMarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Mark newMark = new Mark(getString(R.string.markBasename) + (markList.size()+1), player.getProgress());
+                Mark newMark = new Mark("", "", player.getProgress());
                 selectMark(newMark);
 
                 markList.add(newMark);
@@ -294,7 +291,8 @@ public class MainFragment extends Fragment
                 enableButton(deleteMarkBtn);
                 enableButton(editMarkBtn);
 
-                if (!newMark.equals(currentMark)) {
+                // Allows preventing re-selection by tagging before selecting
+                if (markSpinner.getTag() == null) {
                     selectMark(newMark);
                     showMarkFragment();
                 }
@@ -307,26 +305,6 @@ public class MainFragment extends Fragment
 
                 disableButton(deleteMarkBtn);
                 disableButton(editMarkBtn);
-            }
-        });
-
-
-        /*
-         * Main view buttons
-         */
-
-        // Sequence switch
-        SwitchMaterial seqSwitch = view.findViewById(R.id.modeSwitch);
-        seqSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (seqSwitch.isChecked()) {
-                    // Activate Sequence mode
-                    seqSwitch.setChecked(player.setSequence(true));
-                } else {
-                    // Stop the sequence in the player
-                    seqSwitch.setChecked(player.setSequence(false));
-                }
             }
         });
 
@@ -487,7 +465,9 @@ public class MainFragment extends Fragment
     public void notifyMarkEdit() {
         Collections.sort(markList, (Mark a, Mark b) -> (a.time - b.time));
         markAdapter.notifyDataSetChanged();
+        markSpinner.setTag("NOSELECT");
         markSpinner.setSelection(markList.indexOf(currentMark));
+        markSpinner.setTag(null);
         editListener.notifyChange();
     }
 

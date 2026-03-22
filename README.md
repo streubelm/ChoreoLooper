@@ -21,7 +21,8 @@ andere Fahrer weitergegeben werden.
 ## Installation ##
 
 ChoreoLooper ist verfügbar auf Google Play:
-[![Get It On GooglePlay](https://raw.githubusercontent.com/streubelm/ChoreoLooper/refs/heads/main/artwork/GetItOnGooglePlay_Badge_Web_color_German.svg)](https://play.google.com/store/apps/details?id=com.github.choreolooper)
+
+<a href="https://play.google.com/store/apps/details?id=com.github.choreolooper"><img src="https://raw.githubusercontent.com/streubelm/ChoreoLooper/refs/heads/main/artwork/GetItOnGooglePlay_Badge_Web_color_German.svg" height=60px alt="Get it on Google Play"/></a>
 
 Außerdem stehen alle bisherigen Versionen als APK-Pakete unter [Releases](https://github.com/streubelm/ChoreoLooper/releases) zum Download bereit.
 

@@ -20,10 +20,10 @@ andere Fahrer weitergegeben werden.
 
 ## Installation ##
 
-Die App wird zeitnah im Google Play Store veröffentlicht. Bis dahin steht die jeweils aktuelle Version als APK-Paket unter [Releases](https://github.com/streubelm/ChoreoLooper/releases) zum Download bereit.
+ChoreoLooper ist verfügbar auf Google Play:
+[![Get It On GooglePlay](https://raw.githubusercontent.com/streubelm/ChoreoLooper/refs/heads/main/artwork/GetItOnGooglePlay_Badge_Web_color_German.svg)](https://play.google.com/store/apps/details?id=com.github.choreolooper)
 
-**Alpha-Tester gesucht!** <br/>
-Für die Freigabe im Google Play Store werden noch Tester gesucht. Wenn Du dazu beitragen willst, dass *ChoreoLooper* fehlerfrei läuft und auch über den Google Play Store bereitgestellt werden kann, kontaktiere mich bitte per E-Mail an [streubelmaximilian@gmail.com](mailto:streubelmaximilian@gmail.com). Vielen Dank!
+Außerdem stehen alle bisherigen Versionen als APK-Pakete unter [Releases](https://github.com/streubelm/ChoreoLooper/releases) zum Download bereit.
 
 
 ## Verwendung ##
@@ -50,3 +50,6 @@ Wenn Du bei der Entwicklung unterstützen willst, sei es mit Code, Übersetzunge
 ## Versionsverlauf ##
 
 Siehe [CHANGELOG.md](CHANGELOG.md)
+
+---
+Google Play ist eine Marke von Google LLC.
